@@ -1,0 +1,309 @@
+﻿Use Windows.pkg
+Use cHtmlHelp.pkg
+Use cApplication.pkg
+Use vWin32fh_sfa.pkg
+Use Flexml.pkg
+Use msxml6.pkg
+Use msado28.pkg
+
+Object oHtmlHelp is a cHtmlHelp
+End_Object
+
+Object oApplication is a cApplication
+    Set pbPreserveEnvironment to False
+    Set peHelpType to htHtmlHelp
+
+    Set psCompany to "Springfield, Inc."
+    Set psProduct to "File List Command Line Utility"
+    Set psVersion to "2022"
+
+    Property Boolean pbXmlToConfig True
+
+    Procedure OnCreate
+        Handle  hoCmdLine
+        Integer iNumArgs
+        String  sOption
+
+        Forward Send OnCreate
+
+        Get phoCommandLine of oApplication to hoCmdLine
+        Get CountOfArgs of hoCmdLine to iNumArgs
+
+        If (iNumArgs >= 1) Begin
+            //Argument 1 must be the Kiosk option
+            Move (Argument(hoCmdLine, 1)) to sOption
+
+            If (Uppercase(sOption) = "XMLTOCONFIG") Begin
+                Set pbXmlToConfig   to True
+            End
+            Else If (Uppercase(sOption) = "CONFIGTOXML") Begin
+                Set pbXmlToConfig   to False
+            End
+        End
+    End_Procedure
+End_Object
+
+Define C_Empty for ""
+
+Struct tFilelist
+    Integer iTableNumber
+    String  sFileName
+    String  sTableName
+    String  sDescription
+End_Struct
+
+Procedure AddFilelistEntry Handle hTable String sRoot String sTable String sDisplay
+    Set_Attribute DF_FILE_ROOT_NAME     of hTable to sRoot
+    Set_Attribute DF_FILE_LOGICAL_NAME  of hTable to sTable
+    Set_Attribute DF_FILE_DISPLAY_NAME  of hTable to sDisplay
+End_Procedure
+
+Procedure WriteFileListXmlToConfig
+    tFilelist[] sFilelist
+    String  sPathData sPathXMLFileList sPathFileList sFilename sTableName sDescription 
+    Boolean bExists bLoadOK
+    Handle hoXML hoRoot hoList hoNode hoChildNode
+    Integer iItems iRow iFile 
+    Handle hoParseErrorObject hoErrorItem hWorkspace
+    Integer iCount
+    String sReason
+
+    Get phoWorkspace    of ghoApplication       to hWorkspace
+    Get psDataPath      of hWorkspace           to sPathData
+    If (CountOfPaths(hWorkspace, sPathData) > 1) Begin
+        Get PathAtIndex of hWorkspace sPathData 1   to sPathData
+    End
+    If (Right(sPathData, 1) <> "\") Begin
+        Append sPathData "\"
+    End
+    Move sPathData  to sPathXMLFileList
+    Append sPathXMLFileList "Filelist.xml"
+    
+    File_Exist sPathXMLFileList bExists
+    If (bExists) Begin 
+        Get Create (RefClass(cXMLDOMDocument)) to hoXML
+        
+        Set pbValidateOnParse of hoXML       to True
+        Set pbMultipleErrorMessages of hoXML to True
+
+        Set psDocumentName of hoXML to sPathXMLFileList
+        Get LoadXMLDocument of hoXML to bLoadOK
+
+        Get phXMLErrorObject of hoXML to hoParseErrorObject
+        Get piErrorCount of hoParseErrorObject to iCount        
+
+        For iRow from 0 to (iCount-1)
+            Get ErrorItemNode of hoParseErrorObject iRow to hoErrorItem
+            Get psReason of hoErrorItem to sReason
+            Showln sReason
+            Send Destroy of hoErrorItem
+        Loop
+        
+        Send Destroy of hoParseErrorObject
+        
+        If (bLoadOK) Begin 
+            Get DocumentElement of hoXML to hoRoot
+            If (hoRoot) Begin 
+                Get FindNodeList of hoRoot "FilelistEntry" to hoList
+                If (hoList > 0) Begin 
+                    Get NodeListLength of hoList to iItems
+                    Decrement iItems
+                    For iRow from 1 to iItems
+                        Get CollectionNode of hoList iRow to hoNode
+                        If (hoNode > 0) Begin
+                            Get ChildNodeValue of hoNode "TableNumber"  to sFilelist[iRow].iTableNumber        //iTableNum
+                            Get ChildNodeValue of hoNode "sFileName"    to sFilelist[iRow].sFileName           //sFileName
+                            Get ChildNodeValue of hoNode "sTableName"   to sFilelist[iRow].sTableName          //sTableName
+                            Get ChildNodeValue of hoNode "sDescription" to sFilelist[iRow].sDescription        //sDescription
+                            Send Destroy of hoNode
+                        End
+                    Loop
+                    Send Destroy of hoList
+                End
+                Send Destroy of hoRoot
+            End
+        End
+
+        Send Destroy of hoXML
+
+        Move sPathData  to sPathFileList
+        Append sPathFileList "Filelist.cfg"
+        
+        //Wipe out the existing file list
+        Direct_Output sPathFileList
+            Write "Filelist.cfg"
+        Close_Output
+        
+        For iRow from 1 to (SizeOfArray(sFilelist)-1)
+            Move sFilelist[iRow].iTableNumber  to iFile
+            Move sFilelist[iRow].sFileName     to sFilename
+            Move sFilelist[iRow].sTableName    to sTablename
+            Move sFilelist[iRow].sDescription  to sDescription
+            
+            If ((iFile <> 0) and (sTablename <> C_Empty))  Begin    // Add this slot 
+                If (Trim(sTableName)>"") Begin 
+                    Send AddFilelistEntry iFile sFileName sTableName sDescription
+                End
+            End
+        Loop
+    End
+End_Procedure
+
+Procedure WriteFileListConfigToXml
+    tFilelist[] atTables
+
+    Get LoadCFG to atTables
+    Send ExportToXML atTables
+End_Procedure
+
+Function LoadCFG Returns tFilelist[]
+    tFilelist[] atTables
+    Handle  hFile hTable
+    Integer iRow
+    String  sRoot sTable sDisplay
+
+    Move 0 to hTable
+    Move 0 to iRow
+
+    Repeat 
+        Get_Attribute DF_FILE_NEXT_USED of hTable to hTable
+        
+        If (hTable > 0) Begin
+            Move hTable to atTables[iRow].iTableNumber
+
+            Get_Attribute DF_FILE_ROOT_NAME     of hTable to sRoot
+            Get_Attribute DF_FILE_LOGICAL_NAME  of hTable to sTable
+            Get_Attribute DF_FILE_DISPLAY_NAME  of hTable to sDisplay
+
+            Move sRoot    to atTables[iRow].sFileName
+            Move sTable   to atTables[iRow].sTableName
+            Move sDisplay to atTables[iRow].sDescription
+
+            Increment iRow
+        End
+    Until (hTable = 0)
+
+    Function_Return atTables
+End_Function
+
+Procedure ExportToXML tFilelist[] atTables
+    Integer iRows iFile iRow
+    String  sPathXMLFileList
+    Boolean bExist
+    Handle  hoXML hoRoot hoFile hoNodeToInsert hWorkspace
+
+    Move (SizeOfArray(atTables) - 1)    to iRows
+    If (iRows <= 0) Begin
+        Procedure_Return
+    End
+
+    Get phoWorkspace    of ghoApplication       to hWorkspace
+    Get psDataPath      of hWorkspace           to sPathXMLFileList
+    If (CountOfPaths(hWorkspace, sPathXMLFileList) > 1) Begin
+        Get PathAtIndex of hWorkspace sPathXMLFileList 1    to sPathXMLFileList
+    End
+    If (Right(sPathXMLFileList, 1) <> "\") Begin
+        Append sPathXMLFileList "\"
+    End
+    Append sPathXMLFileList "Filelist.xml"
+
+    File_Exist sPathXMLFileList bExist
+    If (not(bExist)) Begin
+        //Create a blank
+        Direct_Output sPathXMLFileList
+        Close_Output
+    End
+
+    Get Create (RefClass(cXMLDOMDocument)) to hoXML
+    Get CreateDocumentElement of hoXML 'ArrayOfFilelistEntry' to hoRoot
+
+    Send AddAttribute of hoRoot "xmlns:xsi" "http://www.w3.org/2001/XMLSchema-instance" 
+    Send AddAttribute of hoRoot "xmlns:xsd" "http://www.w3.org/2001/XMLSchema"
+
+    Get AddElement of hoRoot "FilelistEntry" "" to hoFile
+
+    Send AddElement of hoFile "TableNumber" "0"
+    Send AddElement of hoFile "sFileName" "Filelist.cfg"
+    Send AddElement of hoFile "sTableName"   ""
+    Send AddElement of hoFile "sDescription" ""
+
+    Send Destroy of hoFile
+
+    For iRow from 0 to iRows
+        Get AddElement of hoRoot "FilelistEntry" "" to hoFile
+
+        Send AddElement of hoFile "TableNumber"     atTables[iRow].iTableNumber
+        Send AddElement of hoFile "sFileName"       atTables[iRow].sFileName
+        Send AddElement of hoFile "sTableName"      atTables[iRow].sTableName
+        Send AddElement of hoFile "sDescription"    atTables[iRow].sDescription
+    Loop
+    
+    Set psDocumentName  of hoXML to sPathXMLFileList
+    Get SaveXMLDocument of hoXML to bExist
+
+    Send Destroy    of hoFile
+    Send Destroy    of hoRoot
+    Send Destroy    of hoXML
+
+    //Now make it pretty
+    Send WriteXMLFormatted sPathXMLFileList
+End_Procedure
+
+// Thank you Vincent!
+// Microsoft MSXML class and Stream reader/writer
+// Output a nicely formatted XML file like Mark's vb program
+// https://support.dataaccess.com/Forums/entry.php?170-How-to-make-an-XML-file-look-nice
+Procedure WriteXMLFormatted String sFile
+    Handle hoReader hoWriter hoStream
+    Variant vWriter vData vStream
+    
+    Get Create (RefClass(cComStream)) to hoStream
+    Send CreateComObject of hoStream
+    Get pvComObject of hoStream to vStream
+    
+    Set ComType of hoStream to OLEadTypeBinary
+    
+    Send ComOpen of hoStream Nothing OLEadModeUnknown OLEadOpenStreamUnspecified '' ''
+    
+    Get Create (RefClass (cComSAXXMLReader60)) to hoReader
+    Send CreateComObject of hoReader
+    
+    Get Create (RefClass (cComMXXMLWriter60)) to hoWriter
+    Send CreateComObject of hoWriter
+    Get pvComObject of hoWriter to vWriter
+    
+    Set ComStandalone of hoWriter to True
+    Set ComByteOrderMark of hoWriter to False
+    Set ComEncoding of hoWriter to "utf-8"
+    Set ComIndent of hoWriter to True
+    Set ComOmitXMLDeclaration of hoWriter to False
+    
+    Set ComContentHandler of hoReader to vWriter
+    Set ComDtdHandler of hoReader to vWriter
+    Set ComErrorHandler of hoReader to vWriter
+    
+    Send ComPutProperty of hoReader "http://xml.org/sax/properties/lexical-handler" vWriter
+    Send ComPutProperty of hoReader "http://xml.org/sax/properties/declaration-handler" vWriter
+    
+    Set ComOutput of hoWriter to vStream
+    
+    Send ComParseURL of hoReader sFile
+    
+    Send ComSaveToFile of hoStream sFile OLEadSaveCreateOverWrite
+    Send ComClose of hoStream
+    
+    Send ReleaseComObject of hoWriter
+    Send ReleaseComObject of hoReader
+    Send ReleaseComObject of hoStream
+    
+    Send Destroy of hoReader
+    Send Destroy of hoWriter            
+    Send Destroy of hoStream
+End_Procedure
+
+If (pbXmlToConfig(oApplication(Self))) Begin
+    Send WriteFileListXmlToConfig
+End
+Else Begin
+    Send WriteFileListConfigToXml
+End

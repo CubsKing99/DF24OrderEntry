@@ -1,0 +1,3045 @@
+// Visual DataFlex COM proxy classes generated from C:\Program Files\Common Files\System\ado\msado28.tlb
+Use FlexCom20.pkg
+
+
+Define OLECursorTypeEnum for Integer
+    Define OLEadOpenUnspecified for -1
+    Define OLEadOpenForwardOnly for 0
+    Define OLEadOpenKeyset for 1
+    Define OLEadOpenDynamic for 2
+    Define OLEadOpenStatic for 3
+
+Define OLECursorOptionEnum for Integer
+    Define OLEadHoldRecords for 256
+    Define OLEadMovePrevious for 512
+    Define OLEadAddNew for 16778240
+    Define OLEadDelete for 16779264
+    Define OLEadUpdate for 16809984
+    Define OLEadBookmark for 8192
+    Define OLEadApproxPosition for 16384
+    Define OLEadUpdateBatch for 65536
+    Define OLEadResync for 131072
+    Define OLEadNotify for 262144
+    Define OLEadFind for 524288
+    Define OLEadSeek for 4194304
+    Define OLEadIndex for 8388608
+
+Define OLELockTypeEnum for Integer
+    Define OLEadLockUnspecified for -1
+    Define OLEadLockReadOnly for 1
+    Define OLEadLockPessimistic for 2
+    Define OLEadLockOptimistic for 3
+    Define OLEadLockBatchOptimistic for 4
+
+Define OLEExecuteOptionEnum for Integer
+    Define OLEadOptionUnspecified for -1
+    Define OLEadAsyncExecute for 16
+    Define OLEadAsyncFetch for 32
+    Define OLEadAsyncFetchNonBlocking for 64
+    Define OLEadExecuteNoRecords for 128
+    Define OLEadExecuteStream for 1024
+    Define OLEadExecuteRecord for 2048
+
+Define OLEConnectOptionEnum for Integer
+    Define OLEadConnectUnspecified for -1
+    Define OLEadAsyncConnect for 16
+
+Define OLEObjectStateEnum for Integer
+    Define OLEadStateClosed for 0
+    Define OLEadStateOpen for 1
+    Define OLEadStateConnecting for 2
+    Define OLEadStateExecuting for 4
+    Define OLEadStateFetching for 8
+
+Define OLECursorLocationEnum for Integer
+    Define OLEadUseNone for 1
+    Define OLEadUseServer for 2
+    Define OLEadUseClient for 3
+    Define OLEadUseClientBatch for 3
+
+Define OLEDataTypeEnum for Integer
+    Define OLEadEmpty for 0
+    Define OLEadTinyInt for 16
+    Define OLEadSmallInt for 2
+    Define OLEadInteger for 3
+    Define OLEadBigInt for 20
+    Define OLEadUnsignedTinyInt for 17
+    Define OLEadUnsignedSmallInt for 18
+    Define OLEadUnsignedInt for 19
+    Define OLEadUnsignedBigInt for 21
+    Define OLEadSingle for 4
+    Define OLEadDouble for 5
+    Define OLEadCurrency for 6
+    Define OLEadDecimal for 14
+    Define OLEadNumeric for 131
+    Define OLEadBoolean for 11
+    Define OLEadError for 10
+    Define OLEadUserDefined for 132
+    Define OLEadVariant for 12
+    Define OLEadIDispatch for 9
+    Define OLEadIUnknown for 13
+    Define OLEadGUID for 72
+    Define OLEadDate for 7
+    Define OLEadDBDate for 133
+    Define OLEadDBTime for 134
+    Define OLEadDBTimeStamp for 135
+    Define OLEadBSTR for 8
+    Define OLEadChar for 129
+    Define OLEadVarChar for 200
+    Define OLEadLongVarChar for 201
+    Define OLEadWChar for 130
+    Define OLEadVarWChar for 202
+    Define OLEadLongVarWChar for 203
+    Define OLEadBinary for 128
+    Define OLEadVarBinary for 204
+    Define OLEadLongVarBinary for 205
+    Define OLEadChapter for 136
+    Define OLEadFileTime for 64
+    Define OLEadPropVariant for 138
+    Define OLEadVarNumeric for 139
+    Define OLEadArray for 8192
+
+Define OLEFieldAttributeEnum for Integer
+    Define OLEadFldUnspecified for -1
+    Define OLEadFldMayDefer for 2
+    Define OLEadFldUpdatable for 4
+    Define OLEadFldUnknownUpdatable for 8
+    Define OLEadFldFixed for 16
+    Define OLEadFldIsNullable for 32
+    Define OLEadFldMayBeNull for 64
+    Define OLEadFldLong for 128
+    Define OLEadFldRowID for 256
+    Define OLEadFldRowVersion for 512
+    Define OLEadFldCacheDeferred for 4096
+    Define OLEadFldIsChapter for 8192
+    Define OLEadFldNegativeScale for 16384
+    Define OLEadFldKeyColumn for 32768
+    Define OLEadFldIsRowURL for 65536
+    Define OLEadFldIsDefaultStream for 131072
+    Define OLEadFldIsCollection for 262144
+
+Define OLEEditModeEnum for Integer
+    Define OLEadEditNone for 0
+    Define OLEadEditInProgress for 1
+    Define OLEadEditAdd for 2
+    Define OLEadEditDelete for 4
+
+Define OLERecordStatusEnum for Integer
+    Define OLEadRecOK for 0
+    Define OLEadRecNew for 1
+    Define OLEadRecModified for 2
+    Define OLEadRecDeleted for 4
+    Define OLEadRecUnmodified for 8
+    Define OLEadRecInvalid for 16
+    Define OLEadRecMultipleChanges for 64
+    Define OLEadRecPendingChanges for 128
+    Define OLEadRecCanceled for 256
+    Define OLEadRecCantRelease for 1024
+    Define OLEadRecConcurrencyViolation for 2048
+    Define OLEadRecIntegrityViolation for 4096
+    Define OLEadRecMaxChangesExceeded for 8192
+    Define OLEadRecObjectOpen for 16384
+    Define OLEadRecOutOfMemory for 32768
+    Define OLEadRecPermissionDenied for 65536
+    Define OLEadRecSchemaViolation for 131072
+    Define OLEadRecDBDeleted for 262144
+
+Define OLEGetRowsOptionEnum for Integer
+    Define OLEadGetRowsRest for -1
+
+Define OLEPositionEnum for Integer
+    Define OLEadPosUnknown for -1
+    Define OLEadPosBOF for -2
+    Define OLEadPosEOF for -3
+
+Define OLEBookmarkEnum for Integer
+    Define OLEadBookmarkCurrent for 0
+    Define OLEadBookmarkFirst for 1
+    Define OLEadBookmarkLast for 2
+
+Define OLEMarshalOptionsEnum for Integer
+    Define OLEadMarshalAll for 0
+    Define OLEadMarshalModifiedOnly for 1
+
+Define OLEAffectEnum for Integer
+    Define OLEadAffectCurrent for 1
+    Define OLEadAffectGroup for 2
+    Define OLEadAffectAll for 3
+    Define OLEadAffectAllChapters for 4
+
+Define OLEResyncEnum for Integer
+    Define OLEadResyncUnderlyingValues for 1
+    Define OLEadResyncAllValues for 2
+
+Define OLECompareEnum for Integer
+    Define OLEadCompareLessThan for 0
+    Define OLEadCompareEqual for 1
+    Define OLEadCompareGreaterThan for 2
+    Define OLEadCompareNotEqual for 3
+    Define OLEadCompareNotComparable for 4
+
+Define OLEFilterGroupEnum for Integer
+    Define OLEadFilterNone for 0
+    Define OLEadFilterPendingRecords for 1
+    Define OLEadFilterAffectedRecords for 2
+    Define OLEadFilterFetchedRecords for 3
+    Define OLEadFilterPredicate for 4
+    Define OLEadFilterConflictingRecords for 5
+
+Define OLESearchDirectionEnum for Integer
+    Define OLEadSearchForward for 1
+    Define OLEadSearchBackward for -1
+
+Define OLEPersistFormatEnum for Integer
+    Define OLEadPersistADTG for 0
+    Define OLEadPersistXML for 1
+
+Define OLEStringFormatEnum for Integer
+    Define OLEadClipString for 2
+
+Define OLEConnectPromptEnum for Integer
+    Define OLEadPromptAlways for 1
+    Define OLEadPromptComplete for 2
+    Define OLEadPromptCompleteRequired for 3
+    Define OLEadPromptNever for 4
+
+Define OLEConnectModeEnum for Integer
+    Define OLEadModeUnknown for 0
+    Define OLEadModeRead for 1
+    Define OLEadModeWrite for 2
+    Define OLEadModeReadWrite for 3
+    Define OLEadModeShareDenyRead for 4
+    Define OLEadModeShareDenyWrite for 8
+    Define OLEadModeShareExclusive for 12
+    Define OLEadModeShareDenyNone for 16
+    Define OLEadModeRecursive for 4194304
+
+Define OLERecordCreateOptionsEnum for Integer
+    Define OLEadCreateCollection for 8192
+    Define OLEadCreateStructDoc for -2147483648
+    Define OLEadCreateNonCollection for 0
+    Define OLEadOpenIfExists for 33554432
+    Define OLEadCreateOverwrite for 67108864
+    Define OLEadFailIfNotExists for -1
+
+Define OLERecordOpenOptionsEnum for Integer
+    Define OLEadOpenRecordUnspecified for -1
+    Define OLEadOpenSource for 8388608
+    Define OLEadOpenOutput for 8388608
+    Define OLEadOpenAsync for 4096
+    Define OLEadDelayFetchStream for 16384
+    Define OLEadDelayFetchFields for 32768
+    Define OLEadOpenExecuteCommand for 65536
+
+Define OLEIsolationLevelEnum for Integer
+    Define OLEadXactUnspecified for -1
+    Define OLEadXactChaos for 16
+    Define OLEadXactReadUncommitted for 256
+    Define OLEadXactBrowse for 256
+    Define OLEadXactCursorStability for 4096
+    Define OLEadXactReadCommitted for 4096
+    Define OLEadXactRepeatableRead for 65536
+    Define OLEadXactSerializable for 1048576
+    Define OLEadXactIsolated for 1048576
+
+Define OLEXactAttributeEnum for Integer
+    Define OLEadXactCommitRetaining for 131072
+    Define OLEadXactAbortRetaining for 262144
+    Define OLEadXactAsyncPhaseOne for 524288
+    Define OLEadXactSyncPhaseOne for 1048576
+
+Define OLEPropertyAttributesEnum for Integer
+    Define OLEadPropNotSupported for 0
+    Define OLEadPropRequired for 1
+    Define OLEadPropOptional for 2
+    Define OLEadPropRead for 512
+    Define OLEadPropWrite for 1024
+
+Define OLEErrorValueEnum for Integer
+    Define OLEadErrProviderFailed for 3000
+    Define OLEadErrInvalidArgument for 3001
+    Define OLEadErrOpeningFile for 3002
+    Define OLEadErrReadFile for 3003
+    Define OLEadErrWriteFile for 3004
+    Define OLEadErrNoCurrentRecord for 3021
+    Define OLEadErrIllegalOperation for 3219
+    Define OLEadErrCantChangeProvider for 3220
+    Define OLEadErrInTransaction for 3246
+    Define OLEadErrFeatureNotAvailable for 3251
+    Define OLEadErrItemNotFound for 3265
+    Define OLEadErrObjectInCollection for 3367
+    Define OLEadErrObjectNotSet for 3420
+    Define OLEadErrDataConversion for 3421
+    Define OLEadErrObjectClosed for 3704
+    Define OLEadErrObjectOpen for 3705
+    Define OLEadErrProviderNotFound for 3706
+    Define OLEadErrBoundToCommand for 3707
+    Define OLEadErrInvalidParamInfo for 3708
+    Define OLEadErrInvalidConnection for 3709
+    Define OLEadErrNotReentrant for 3710
+    Define OLEadErrStillExecuting for 3711
+    Define OLEadErrOperationCancelled for 3712
+    Define OLEadErrStillConnecting for 3713
+    Define OLEadErrInvalidTransaction for 3714
+    Define OLEadErrNotExecuting for 3715
+    Define OLEadErrUnsafeOperation for 3716
+    Define OLEadwrnSecurityDialog for 3717
+    Define OLEadwrnSecurityDialogHeader for 3718
+    Define OLEadErrIntegrityViolation for 3719
+    Define OLEadErrPermissionDenied for 3720
+    Define OLEadErrDataOverflow for 3721
+    Define OLEadErrSchemaViolation for 3722
+    Define OLEadErrSignMismatch for 3723
+    Define OLEadErrCantConvertvalue for 3724
+    Define OLEadErrCantCreate for 3725
+    Define OLEadErrColumnNotOnThisRow for 3726
+    Define OLEadErrURLDoesNotExist for 3727
+    Define OLEadErrTreePermissionDenied for 3728
+    Define OLEadErrInvalidURL for 3729
+    Define OLEadErrResourceLocked for 3730
+    Define OLEadErrResourceExists for 3731
+    Define OLEadErrCannotComplete for 3732
+    Define OLEadErrVolumeNotFound for 3733
+    Define OLEadErrOutOfSpace for 3734
+    Define OLEadErrResourceOutOfScope for 3735
+    Define OLEadErrUnavailable for 3736
+    Define OLEadErrURLNamedRowDoesNotExist for 3737
+    Define OLEadErrDelResOutOfScope for 3738
+    Define OLEadErrPropInvalidColumn for 3739
+    Define OLEadErrPropInvalidOption for 3740
+    Define OLEadErrPropInvalidValue for 3741
+    Define OLEadErrPropConflicting for 3742
+    Define OLEadErrPropNotAllSettable for 3743
+    Define OLEadErrPropNotSet for 3744
+    Define OLEadErrPropNotSettable for 3745
+    Define OLEadErrPropNotSupported for 3746
+    Define OLEadErrCatalogNotSet for 3747
+    Define OLEadErrCantChangeConnection for 3748
+    Define OLEadErrFieldsUpdateFailed for 3749
+    Define OLEadErrDenyNotSupported for 3750
+    Define OLEadErrDenyTypeNotSupported for 3751
+    Define OLEadErrProviderNotSpecified for 3753
+    Define OLEadErrConnectionStringTooLong for 3754
+
+Define OLEParameterAttributesEnum for Integer
+    Define OLEadParamSigned for 16
+    Define OLEadParamNullable for 64
+    Define OLEadParamLong for 128
+
+Define OLEParameterDirectionEnum for Integer
+    Define OLEadParamUnknown for 0
+    Define OLEadParamInput for 1
+    Define OLEadParamOutput for 2
+    Define OLEadParamInputOutput for 3
+    Define OLEadParamReturnValue for 4
+
+Define OLECommandTypeEnum for Integer
+    Define OLEadCmdUnspecified for -1
+    Define OLEadCmdUnknown for 8
+    Define OLEadCmdText for 1
+    Define OLEadCmdTable for 2
+    Define OLEadCmdStoredProc for 4
+    Define OLEadCmdFile for 256
+    Define OLEadCmdTableDirect for 512
+
+Define OLEEventStatusEnum for Integer
+    Define OLEadStatusOK for 1
+    Define OLEadStatusErrorsOccurred for 2
+    Define OLEadStatusCantDeny for 3
+    Define OLEadStatusCancel for 4
+    Define OLEadStatusUnwantedEvent for 5
+
+Define OLEEventReasonEnum for Integer
+    Define OLEadRsnAddNew for 1
+    Define OLEadRsnDelete for 2
+    Define OLEadRsnUpdate for 3
+    Define OLEadRsnUndoUpdate for 4
+    Define OLEadRsnUndoAddNew for 5
+    Define OLEadRsnUndoDelete for 6
+    Define OLEadRsnRequery for 7
+    Define OLEadRsnResynch for 8
+    Define OLEadRsnClose for 9
+    Define OLEadRsnMove for 10
+    Define OLEadRsnFirstChange for 11
+    Define OLEadRsnMoveFirst for 12
+    Define OLEadRsnMoveNext for 13
+    Define OLEadRsnMovePrevious for 14
+    Define OLEadRsnMoveLast for 15
+
+Define OLESchemaEnum for Integer
+    Define OLEadSchemaProviderSpecific for -1
+    Define OLEadSchemaAsserts for 0
+    Define OLEadSchemaCatalogs for 1
+    Define OLEadSchemaCharacterSets for 2
+    Define OLEadSchemaCollations for 3
+    Define OLEadSchemaColumns for 4
+    Define OLEadSchemaCheckConstraints for 5
+    Define OLEadSchemaConstraintColumnUsage for 6
+    Define OLEadSchemaConstraintTableUsage for 7
+    Define OLEadSchemaKeyColumnUsage for 8
+    Define OLEadSchemaReferentialContraints for 9
+    Define OLEadSchemaReferentialConstraints for 9
+    Define OLEadSchemaTableConstraints for 10
+    Define OLEadSchemaColumnsDomainUsage for 11
+    Define OLEadSchemaIndexes for 12
+    Define OLEadSchemaColumnPrivileges for 13
+    Define OLEadSchemaTablePrivileges for 14
+    Define OLEadSchemaUsagePrivileges for 15
+    Define OLEadSchemaProcedures for 16
+    Define OLEadSchemaSchemata for 17
+    Define OLEadSchemaSQLLanguages for 18
+    Define OLEadSchemaStatistics for 19
+    Define OLEadSchemaTables for 20
+    Define OLEadSchemaTranslations for 21
+    Define OLEadSchemaProviderTypes for 22
+    Define OLEadSchemaViews for 23
+    Define OLEadSchemaViewColumnUsage for 24
+    Define OLEadSchemaViewTableUsage for 25
+    Define OLEadSchemaProcedureParameters for 26
+    Define OLEadSchemaForeignKeys for 27
+    Define OLEadSchemaPrimaryKeys for 28
+    Define OLEadSchemaProcedureColumns for 29
+    Define OLEadSchemaDBInfoKeywords for 30
+    Define OLEadSchemaDBInfoLiterals for 31
+    Define OLEadSchemaCubes for 32
+    Define OLEadSchemaDimensions for 33
+    Define OLEadSchemaHierarchies for 34
+    Define OLEadSchemaLevels for 35
+    Define OLEadSchemaMeasures for 36
+    Define OLEadSchemaProperties for 37
+    Define OLEadSchemaMembers for 38
+    Define OLEadSchemaTrustees for 39
+    Define OLEadSchemaFunctions for 40
+    Define OLEadSchemaActions for 41
+    Define OLEadSchemaCommands for 42
+    Define OLEadSchemaSets for 43
+
+Define OLEFieldStatusEnum for Integer
+    Define OLEadFieldOK for 0
+    Define OLEadFieldCantConvertValue for 2
+    Define OLEadFieldIsNull for 3
+    Define OLEadFieldTruncated for 4
+    Define OLEadFieldSignMismatch for 5
+    Define OLEadFieldDataOverflow for 6
+    Define OLEadFieldCantCreate for 7
+    Define OLEadFieldUnavailable for 8
+    Define OLEadFieldPermissionDenied for 9
+    Define OLEadFieldIntegrityViolation for 10
+    Define OLEadFieldSchemaViolation for 11
+    Define OLEadFieldBadStatus for 12
+    Define OLEadFieldDefault for 13
+    Define OLEadFieldIgnore for 15
+    Define OLEadFieldDoesNotExist for 16
+    Define OLEadFieldInvalidURL for 17
+    Define OLEadFieldResourceLocked for 18
+    Define OLEadFieldResourceExists for 19
+    Define OLEadFieldCannotComplete for 20
+    Define OLEadFieldVolumeNotFound for 21
+    Define OLEadFieldOutOfSpace for 22
+    Define OLEadFieldCannotDeleteSource for 23
+    Define OLEadFieldReadOnly for 24
+    Define OLEadFieldResourceOutOfScope for 25
+    Define OLEadFieldAlreadyExists for 26
+    Define OLEadFieldPendingInsert for 65536
+    Define OLEadFieldPendingDelete for 131072
+    Define OLEadFieldPendingChange for 262144
+    Define OLEadFieldPendingUnknown for 524288
+    Define OLEadFieldPendingUnknownDelete for 1048576
+
+Define OLESeekEnum for Integer
+    Define OLEadSeekFirstEQ for 1
+    Define OLEadSeekLastEQ for 2
+    Define OLEadSeekAfterEQ for 4
+    Define OLEadSeekAfter for 8
+    Define OLEadSeekBeforeEQ for 16
+    Define OLEadSeekBefore for 32
+
+Define OLEADCPROP_UPDATECRITERIA_ENUM for Integer
+    Define OLEadCriteriaKey for 0
+    Define OLEadCriteriaAllCols for 1
+    Define OLEadCriteriaUpdCols for 2
+    Define OLEadCriteriaTimeStamp for 3
+
+Define OLEADCPROP_ASYNCTHREADPRIORITY_ENUM for Integer
+    Define OLEadPriorityLowest for 1
+    Define OLEadPriorityBelowNormal for 2
+    Define OLEadPriorityNormal for 3
+    Define OLEadPriorityAboveNormal for 4
+    Define OLEadPriorityHighest for 5
+
+Define OLEADCPROP_AUTORECALC_ENUM for Integer
+    Define OLEadRecalcUpFront for 0
+    Define OLEadRecalcAlways for 1
+
+Define OLEADCPROP_UPDATERESYNC_ENUM for Integer
+    Define OLEadResyncNone for 0
+    Define OLEadResyncAutoIncrement for 1
+    Define OLEadResyncConflicts for 2
+    Define OLEadResyncUpdates for 4
+    Define OLEadResyncInserts for 8
+    Define OLEadResyncAll for 15
+
+Define OLEMoveRecordOptionsEnum for Integer
+    Define OLEadMoveUnspecified for -1
+    Define OLEadMoveOverWrite for 1
+    Define OLEadMoveDontUpdateLinks for 2
+    Define OLEadMoveAllowEmulation for 4
+
+Define OLECopyRecordOptionsEnum for Integer
+    Define OLEadCopyUnspecified for -1
+    Define OLEadCopyOverWrite for 1
+    Define OLEadCopyAllowEmulation for 4
+    Define OLEadCopyNonRecursive for 2
+
+Define OLEStreamTypeEnum for Integer
+    Define OLEadTypeBinary for 1
+    Define OLEadTypeText for 2
+
+Define OLELineSeparatorEnum for Integer
+    Define OLEadLF for 10
+    Define OLEadCR for 13
+    Define OLEadCRLF for -1
+
+Define OLEStreamOpenOptionsEnum for Integer
+    Define OLEadOpenStreamUnspecified for -1
+    Define OLEadOpenStreamAsync for 1
+    Define OLEadOpenStreamFromRecord for 4
+
+Define OLEStreamWriteEnum for Integer
+    Define OLEadWriteChar for 0
+    Define OLEadWriteLine for 1
+    Define OLEstWriteChar for 0
+    Define OLEstWriteLine for 1
+
+Define OLESaveOptionsEnum for Integer
+    Define OLEadSaveCreateNotExist for 1
+    Define OLEadSaveCreateOverWrite for 2
+
+Define OLEFieldEnum for Integer
+    Define OLEadDefaultStream for -1
+    Define OLEadRecordURL for -2
+
+Define OLEStreamReadEnum for Integer
+    Define OLEadReadAll for -1
+    Define OLEadReadLine for -2
+
+Define OLERecordTypeEnum for Integer
+    Define OLEadSimpleRecord for 0
+    Define OLEadCollectionRecord for 1
+    Define OLEadStructDoc for 2
+
+Define ADO_LONGPTR for BigInt
+
+Define PositionEnum_Param for ADO_LONGPTR
+
+Define SearchDirection for OLESearchDirectionEnum
+
+// CLSID: {00001550-0000-0010-8000-00AA006D2EA4}
+Class cCom_Connection is a Mixin
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComConnectionString Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComConnectionString String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCommandTimeout Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCommandTimeout Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 2 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComConnectionTimeout Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComConnectionTimeout Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComVersion Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComClose
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+
+    Function ComExecute String llCommandText Variant llRecordsAffected Integer llOptions Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llCommandText
+        Send DefineParam to hDispatchDriver (OLE_VT_BYREF ior OLE_VT_VARIANT) llRecordsAffected
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComBeginTrans Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComCommitTrans
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 8 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComRollbackTrans
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 9 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComOpen String llConnectionString String llUserID String llPassword Integer llOptions
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 4
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llConnectionString
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llUserID
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send InvokeComMethod to hDispatchDriver 10 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComErrors Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 11 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComDefaultDatabase Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 12 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDefaultDatabase String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 12 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComIsolationLevel Returns OLEIsolationLevelEnum
+        Handle hDispatchDriver
+        OLEIsolationLevelEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 13 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComIsolationLevel OLEIsolationLevelEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 13 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComAttributes Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 14 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComAttributes Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 14 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCursorLocation Returns OLECursorLocationEnum
+        Handle hDispatchDriver
+        OLECursorLocationEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 15 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCursorLocation OLECursorLocationEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 15 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComMode Returns OLEConnectModeEnum
+        Handle hDispatchDriver
+        OLEConnectModeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 16 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComMode OLEConnectModeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 16 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComProvider Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 17 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComProvider String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 17 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComState Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 18 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComOpenSchema OLESchemaEnum llSchema Variant llRestrictions Variant llSchemaID Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSchema
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llRestrictions
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llSchemaID
+        Get InvokeComMethod of hDispatchDriver 19 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComCancel
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 21 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {00001400-0000-0010-8000-00AA006D2EA4}
+Class cComConnectionEvents is a Mixin
+
+    { MethodType=Event }
+    Procedure OnComInfoMessage Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComBeginTransComplete Integer llTransactionLevel Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComCommitTransComplete Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComRollbackTransComplete Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComWillExecute String ByRef llSource OLECursorTypeEnum ByRef llCursorType OLELockTypeEnum ByRef llLockType Integer ByRef llOptions OLEEventStatusEnum ByRef lladStatus Variant llpCommand Variant llpRecordset Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComExecuteComplete Integer llRecordsAffected Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpCommand Variant llpRecordset Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComWillConnect String ByRef llConnectionString String ByRef llUserID String ByRef llPassword Integer ByRef llOptions OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComConnectComplete Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComDisconnect OLEEventStatusEnum ByRef lladStatus Variant llpConnection
+    End_Procedure
+
+    { Visibility=Private }
+    Procedure RegisterComEvents
+        Send RegisterComEvent 0 msg_OnComInfoMessage
+        Send RegisterComEvent 1 msg_OnComBeginTransComplete
+        Send RegisterComEvent 3 msg_OnComCommitTransComplete
+        Send RegisterComEvent 2 msg_OnComRollbackTransComplete
+        Send RegisterComEvent 4 msg_OnComWillExecute
+        Send RegisterComEvent 5 msg_OnComExecuteComplete
+        Send RegisterComEvent 6 msg_OnComWillConnect
+        Send RegisterComEvent 7 msg_OnComConnectComplete
+        Send RegisterComEvent 8 msg_OnComDisconnect
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: ADODB.Connection.6.0
+// CLSID: {00000514-0000-0010-8000-00AA006D2EA4}
+Class cComConnection is a cComAutomationObject
+    Import_Class_Protocol cCom_Connection
+    Import_Class_Protocol cComConnectionEvents
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{00000514-0000-0010-8000-00AA006D2EA4}"
+        Set psEventId to "{00001400-0000-0010-8000-00AA006D2EA4}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {00001562-0000-0010-8000-00AA006D2EA4}
+Class cCom_Record is a Mixin
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComActiveConnection Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComActiveConnection String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComActiveConnectionRef Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComState Returns OLEObjectStateEnum
+        Handle hDispatchDriver
+        OLEObjectStateEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComSource Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComSource String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComSourceRef Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComMode Returns OLEConnectModeEnum
+        Handle hDispatchDriver
+        OLEConnectModeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComMode OLEConnectModeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 4 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComParentURL Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComMoveRecord String llSource String llDestination String llUserName String llPassword OLEMoveRecordOptionsEnum llOptions Boolean llAsync Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 6
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llSource
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llDestination
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llUserName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llAsync
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComCopyRecord String llSource String llDestination String llUserName String llPassword OLECopyRecordOptionsEnum llOptions Boolean llAsync Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 6
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llSource
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llDestination
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llUserName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llAsync
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComDeleteRecord String llSource Boolean llAsync
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llSource
+        Send DefineParam to hDispatchDriver OLE_VT_BOOL llAsync
+        Send InvokeComMethod to hDispatchDriver 8 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComOpen Variant llSource Variant llActiveConnection OLEConnectModeEnum llMode OLERecordCreateOptionsEnum llCreateOptions OLERecordOpenOptionsEnum llOptions String llUserName String llPassword
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 7
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llSource
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llActiveConnection
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llMode
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llCreateOptions
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llUserName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send InvokeComMethod to hDispatchDriver 9 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComClose
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 10 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComFields Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComRecordType Returns OLERecordTypeEnum
+        Handle hDispatchDriver
+        OLERecordTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 11 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComGetChildren Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 12 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComCancel
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 13 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: ADODB.Record.6.0
+// CLSID: {00000560-0000-0010-8000-00AA006D2EA4}
+Class cComRecord is a cComAutomationObject
+    Import_Class_Protocol cCom_Record
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{00000560-0000-0010-8000-00AA006D2EA4}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {00001565-0000-0010-8000-00AA006D2EA4}
+Class cCom_Stream is a Mixin
+
+    { MethodType=Property DesignTime=False }
+    Function ComSize Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComEOS Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComPosition Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComPosition Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComType Returns OLEStreamTypeEnum
+        Handle hDispatchDriver
+        OLEStreamTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComType OLEStreamTypeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 4 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComLineSeparator Returns OLELineSeparatorEnum
+        Handle hDispatchDriver
+        OLELineSeparatorEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComLineSeparator OLELineSeparatorEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 5 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComState Returns OLEObjectStateEnum
+        Handle hDispatchDriver
+        OLEObjectStateEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComMode Returns OLEConnectModeEnum
+        Handle hDispatchDriver
+        OLEConnectModeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComMode OLEConnectModeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 7 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCharset Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCharset String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 8 OLE_VT_BSTR to value
+    End_Procedure
+
+    Function ComRead Integer llNumBytes Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llNumBytes
+        Get InvokeComMethod of hDispatchDriver 9 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComOpen Variant llSource OLEConnectModeEnum llMode OLEStreamOpenOptionsEnum llOptions String llUserName String llPassword
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 5
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llSource
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llMode
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llUserName
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llPassword
+        Send InvokeComMethod to hDispatchDriver 10 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComClose
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 11 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComSkipLine
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 12 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComWrite Variant llBuffer
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llBuffer
+        Send InvokeComMethod to hDispatchDriver 13 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComSetEOS
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 14 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComCopyTo Variant llDestStream Integer llCharNumber
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llDestStream
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llCharNumber
+        Send InvokeComMethod to hDispatchDriver 15 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComFlush
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 16 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComSaveToFile String llFileName OLESaveOptionsEnum llOptions
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send InvokeComMethod to hDispatchDriver 17 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComLoadFromFile String llFileName
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llFileName
+        Send InvokeComMethod to hDispatchDriver 18 OLE_VT_VOID
+    End_Procedure
+
+    Function ComReadText Integer llNumChars Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llNumChars
+        Get InvokeComMethod of hDispatchDriver 19 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComWriteText String llData OLEStreamWriteEnum llOptions
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llData
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send InvokeComMethod to hDispatchDriver 20 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComCancel
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 21 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: ADODB.Stream.6.0
+// CLSID: {00000566-0000-0010-8000-00AA006D2EA4}
+Class cComStream is a cComAutomationObject
+    Import_Class_Protocol cCom_Stream
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{00000566-0000-0010-8000-00AA006D2EA4}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {986761E8-7269-4890-AA65-AD7C03697A6D}
+Class cCom_Command is a Mixin
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComActiveConnection Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComActiveConnection Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComActiveConnection Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCommandText Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCommandText String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 2 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCommandTimeout Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCommandTimeout Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComPrepared Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComPrepared Boolean value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 4 OLE_VT_BOOL to value
+    End_Procedure
+
+    Function ComExecute Variant llRecordsAffected Variant llParameters Integer llOptions Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver (OLE_VT_BYREF ior OLE_VT_VARIANT) llRecordsAffected
+        Send DefineParam to hDispatchDriver (OLE_VT_BYREF ior OLE_VT_VARIANT) llParameters
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComCreateParameter String llName OLEDataTypeEnum llType OLEParameterDirectionEnum llDirection Integer llSize Variant llValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 5
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llType
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llDirection
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSize
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llValue
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComParameters Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCommandType OLECommandTypeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 7 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCommandType Returns OLECommandTypeEnum
+        Handle hDispatchDriver
+        OLECommandTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 7 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComName String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 8 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComState Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 9 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComCancel
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 10 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCommandStream Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 11 OLE_VT_UNKNOWN to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCommandStream Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 11 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDialect String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 12 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComDialect Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 12 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComNamedParameters Boolean value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 13 OLE_VT_BOOL to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComNamedParameters Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 13 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CoClass
+// ProgID: ADODB.Command.6.0
+// CLSID: {00000507-0000-0010-8000-00AA006D2EA4}
+Class cComCommand is a cComAutomationObject
+    Import_Class_Protocol cCom_Command
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{00000507-0000-0010-8000-00AA006D2EA4}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {00001556-0000-0010-8000-00AA006D2EA4}
+Class cCom_Recordset is a Mixin
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComAbsolutePosition Returns OLEPositionEnum
+        Handle hDispatchDriver
+        OLEPositionEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1000 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComAbsolutePosition OLEPositionEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1000 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComActiveConnection Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1001 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComActiveConnection Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1001 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComActiveConnection Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1001 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComBOF Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1002 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComBookmark Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1003 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComBookmark Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1003 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCacheSize Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1004 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCacheSize Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1004 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCursorType Returns OLECursorTypeEnum
+        Handle hDispatchDriver
+        OLECursorTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1005 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCursorType OLECursorTypeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1005 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComEOF Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1006 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComFields Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComLockType Returns OLELockTypeEnum
+        Handle hDispatchDriver
+        OLELockTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1008 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComLockType OLELockTypeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1008 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComMaxRecords Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1009 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComMaxRecords Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1009 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComRecordCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1010 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComSource Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1011 OLE_VT_DISPATCH to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComSource String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1011 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComSource Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1011 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComAddNew Variant llFieldList Variant llValues
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llFieldList
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llValues
+        Send InvokeComMethod to hDispatchDriver 1012 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComCancelUpdate
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1013 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComClose
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1014 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComDelete OLEAffectEnum llAffectRecords
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llAffectRecords
+        Send InvokeComMethod to hDispatchDriver 1015 OLE_VT_VOID
+    End_Procedure
+
+    Function ComGetRows Integer llRows Variant llStart Variant llFields Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 3
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llRows
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llStart
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llFields
+        Get InvokeComMethod of hDispatchDriver 1016 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComMove Integer llNumRecords Variant llStart
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llNumRecords
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llStart
+        Send InvokeComMethod to hDispatchDriver 1017 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComMoveNext
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1018 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComMovePrevious
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1019 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComMoveFirst
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1020 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComMoveLast
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1021 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComOpen Variant llSource Variant llActiveConnection OLECursorTypeEnum llCursorType OLELockTypeEnum llLockType Integer llOptions
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 5
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llSource
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llActiveConnection
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llCursorType
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llLockType
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send InvokeComMethod to hDispatchDriver 1022 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComOpen_2 
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1022 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComRequery Integer llOptions
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llOptions
+        Send InvokeComMethod to hDispatchDriver 1023 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComUpdate Variant llFields Variant llValues
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llFields
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llValues
+        Send InvokeComMethod to hDispatchDriver 1025 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComUpdate_2
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1025 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComAbsolutePage Returns OLEPositionEnum
+        Handle hDispatchDriver
+        OLEPositionEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1047 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComAbsolutePage OLEPositionEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1047 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComEditMode Returns OLEEditModeEnum
+        Handle hDispatchDriver
+        OLEEditModeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1026 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComFilter Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1030 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComFilter Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1030 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComPageCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1050 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComPageSize Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1048 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComPageSize Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1048 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComSort Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1031 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComSort String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1031 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComStatus Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1029 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComState Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1054 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComUpdateBatch OLEAffectEnum llAffectRecords
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llAffectRecords
+        Send InvokeComMethod to hDispatchDriver 1035 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComCancelBatch OLEAffectEnum llAffectRecords
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llAffectRecords
+        Send InvokeComMethod to hDispatchDriver 1049 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComCursorLocation Returns OLECursorLocationEnum
+        Handle hDispatchDriver
+        OLECursorLocationEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1051 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComCursorLocation OLECursorLocationEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1051 OLE_VT_I4 to value
+    End_Procedure
+
+    Function ComNextRecordset Variant llRecordsAffected Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver (OLE_VT_BYREF ior OLE_VT_VARIANT) llRecordsAffected
+        Get InvokeComMethod of hDispatchDriver 1052 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComSupports OLECursorOptionEnum llCursorOptions Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llCursorOptions
+        Get InvokeComMethod of hDispatchDriver 1036 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComMarshalOptions Returns OLEMarshalOptionsEnum
+        Handle hDispatchDriver
+        OLEMarshalOptionsEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1053 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComMarshalOptions OLEMarshalOptionsEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1053 OLE_VT_I4 to value
+    End_Procedure
+
+    Procedure ComFind String llCriteria Integer llSkipRecords OLESearchDirectionEnum llSearchDirection Variant llStart
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 4
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llCriteria
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSkipRecords
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSearchDirection
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llStart
+        Send InvokeComMethod to hDispatchDriver 1058 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComCancel
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1055 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComDataSource Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1056 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDataSource Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1056 OLE_VT_UNKNOWN to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComActiveCommand Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1061 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComStayInSync Boolean value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1063 OLE_VT_BOOL to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComStayInSync Returns Boolean
+        Handle hDispatchDriver
+        Boolean retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1063 OLE_VT_BOOL to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComGetString OLEStringFormatEnum llStringFormat Integer llNumRows String llColumnDelimeter String llRowDelimeter String llNullExpr Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 5
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llStringFormat
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llNumRows
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llColumnDelimeter
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llRowDelimeter
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llNullExpr
+        Get InvokeComMethod of hDispatchDriver 1062 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComDataMember Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1064 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDataMember String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1064 OLE_VT_BSTR to value
+    End_Procedure
+
+    Function ComCompareBookmarks Variant llBookmark1 Variant llBookmark2 Returns OLECompareEnum
+        Handle hDispatchDriver
+        OLECompareEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llBookmark1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llBookmark2
+        Get InvokeComMethod of hDispatchDriver 1065 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function ComClone OLELockTypeEnum llLockType Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llLockType
+        Get InvokeComMethod of hDispatchDriver 1034 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComResync OLEAffectEnum llAffectRecords OLEResyncEnum llResyncValues
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llAffectRecords
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llResyncValues
+        Send InvokeComMethod to hDispatchDriver 1024 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComSeek Variant llKeyValues OLESeekEnum llSeekOption
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llKeyValues
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llSeekOption
+        Send InvokeComMethod to hDispatchDriver 1066 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComIndex String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1067 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComIndex Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1067 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComSave Variant llDestination OLEPersistFormatEnum llPersistFormat
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 2
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llDestination
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llPersistFormat
+        Send InvokeComMethod to hDispatchDriver 1057 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {00001266-0000-0010-8000-00AA006D2EA4}
+Class cComRecordsetEvents is a Mixin
+
+    { MethodType=Event }
+    Procedure OnComWillChangeField Integer llcFields Variant llFields OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComFieldChangeComplete Integer llcFields Variant llFields Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComWillChangeRecord OLEEventReasonEnum lladReason Integer llcRecords OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComRecordChangeComplete OLEEventReasonEnum lladReason Integer llcRecords Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComWillChangeRecordset OLEEventReasonEnum lladReason OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComRecordsetChangeComplete OLEEventReasonEnum lladReason Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComWillMove OLEEventReasonEnum lladReason OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComMoveComplete OLEEventReasonEnum lladReason Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComEndOfRecordset Boolean ByRef llfMoreData OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComFetchProgress Integer llProgress Integer llMaxProgress OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { MethodType=Event }
+    Procedure OnComFetchComplete Variant llpError OLEEventStatusEnum ByRef lladStatus Variant llpRecordset
+    End_Procedure
+
+    { Visibility=Private }
+    Procedure RegisterComEvents
+        Send RegisterComEvent 9 msg_OnComWillChangeField
+        Send RegisterComEvent 10 msg_OnComFieldChangeComplete
+        Send RegisterComEvent 11 msg_OnComWillChangeRecord
+        Send RegisterComEvent 12 msg_OnComRecordChangeComplete
+        Send RegisterComEvent 13 msg_OnComWillChangeRecordset
+        Send RegisterComEvent 14 msg_OnComRecordsetChangeComplete
+        Send RegisterComEvent 15 msg_OnComWillMove
+        Send RegisterComEvent 16 msg_OnComMoveComplete
+        Send RegisterComEvent 17 msg_OnComEndOfRecordset
+        Send RegisterComEvent 18 msg_OnComFetchProgress
+        Send RegisterComEvent 19 msg_OnComFetchComplete
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: ADODB.Recordset.6.0
+// CLSID: {00000535-0000-0010-8000-00AA006D2EA4}
+Class cComRecordset is a cComAutomationObject
+    Import_Class_Protocol cCom_Recordset
+    Import_Class_Protocol cComRecordsetEvents
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{00000535-0000-0010-8000-00AA006D2EA4}"
+        Set psEventId to "{00001266-0000-0010-8000-00AA006D2EA4}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {0000150C-0000-0010-8000-00AA006D2EA4}
+Class cCom_Parameter is a Mixin
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComName String value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1 OLE_VT_BSTR to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComValue Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComType Returns OLEDataTypeEnum
+        Handle hDispatchDriver
+        OLEDataTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComType OLEDataTypeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 2 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDirection OLEParameterDirectionEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 3 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComDirection Returns OLEParameterDirectionEnum
+        Handle hDispatchDriver
+        OLEParameterDirectionEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComPrecision UChar value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 4 OLE_VT_UI1 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComPrecision Returns UChar
+        Handle hDispatchDriver
+        UChar retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_UI1 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComNumericScale UChar value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 5 OLE_VT_UI1 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComNumericScale Returns UChar
+        Handle hDispatchDriver
+        UChar retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_UI1 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComSize Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 6 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComSize Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComAppendChunk Variant llVal
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llVal
+        Send InvokeComMethod to hDispatchDriver 7 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComAttributes Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 8 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComAttributes Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 8 OLE_VT_I4 to value
+    End_Procedure
+End_Class
+
+// CoClass
+// ProgID: ADODB.Parameter.6.0
+// CLSID: {0000050B-0000-0010-8000-00AA006D2EA4}
+Class cComParameter is a cComAutomationObject
+    Import_Class_Protocol cCom_Parameter
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psProgID to "{0000050B-0000-0010-8000-00AA006D2EA4}"
+        Set peAutoCreate to acNoAutoCreate
+    End_Procedure
+End_Class
+
+// CLSID: {00000512-0000-0010-8000-00AA006D2EA4}
+Class cCom_Collection is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComRefresh
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {00000513-0000-0010-8000-00AA006D2EA4}
+Class cCom_DynaCollection is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComRefresh
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComAppend Variant llObject
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llObject
+        Send InvokeComMethod to hDispatchDriver 1610809344 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComDelete Variant llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Send InvokeComMethod to hDispatchDriver 1610809345 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {00000534-0000-0010-8000-00AA006D2EA4}
+Class cCom_ADO is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {00000504-0000-0010-8000-00AA006D2EA4}
+Class cComProperties is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComRefresh
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComItem Variant llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {00000503-0000-0010-8000-00AA006D2EA4}
+Class cComProperty is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComValue Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1610743810 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComType Returns OLEDataTypeEnum
+        Handle hDispatchDriver
+        OLEDataTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1610743811 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComAttributes Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1610743812 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComAttributes Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1610743812 OLE_VT_I4 to value
+    End_Procedure
+End_Class
+
+// CLSID: {00000500-0000-0010-8000-00AA006D2EA4}
+Class cComError is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComNumber Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComSource Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 2 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComDescription Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComHelpFile Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 3 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComHelpContext Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 4 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComSQLState Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 5 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComNativeError Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 6 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {00000501-0000-0010-8000-00AA006D2EA4}
+Class cComErrors is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComRefresh
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComItem Variant llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComClear
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 1610809345 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {00001564-0000-0010-8000-00AA006D2EA4}
+Class cComFields is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComRefresh
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComItem Variant llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComDelete Variant llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Send InvokeComMethod to hDispatchDriver 4 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComAppend String llName OLEDataTypeEnum llType Integer llDefinedSize OLEFieldAttributeEnum llAttrib // Variant llFieldValue
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 5
+        Send DefineParam to hDispatchDriver OLE_VT_BSTR llName
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llType
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llDefinedSize
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llAttrib
+        Send DefineParam to hDispatchDriver OLE_VT_Null 
+        Send InvokeComMethod to hDispatchDriver 3 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComUpdate
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 5 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComResync OLEResyncEnum llResyncValues
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llResyncValues
+        Send InvokeComMethod to hDispatchDriver 6 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComCancelUpdate
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 7 OLE_VT_VOID
+    End_Procedure
+End_Class
+
+// CLSID: {00001569-0000-0010-8000-00AA006D2EA4}
+Class cComField is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComProperties Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 500 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComActualSize Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1109 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComAttributes Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1114 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComDefinedSize Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1103 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComName Returns String
+        Handle hDispatchDriver
+        String retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1100 OLE_VT_BSTR to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComType Returns OLEDataTypeEnum
+        Handle hDispatchDriver
+        OLEDataTypeEnum retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1102 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComValue Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 0 OLE_VT_VARIANT to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComPrecision Returns UChar
+        Handle hDispatchDriver
+        UChar retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1112 OLE_VT_UI1 to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComNumericScale Returns UChar
+        Handle hDispatchDriver
+        UChar retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1113 OLE_VT_UI1 to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComAppendChunk Variant llData
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llData
+        Send InvokeComMethod to hDispatchDriver 1107 OLE_VT_VOID
+    End_Procedure
+
+    Function ComGetChunk Integer llLength Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_I4 llLength
+        Get InvokeComMethod of hDispatchDriver 1108 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComOriginalValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1104 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComUnderlyingValue Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1105 OLE_VT_VARIANT to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Function ComDataFormat Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1115 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDataFormat Variant value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1115 OLE_VT_UNKNOWN to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComPrecision UChar value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1112 OLE_VT_UI1 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComNumericScale UChar value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1113 OLE_VT_UI1 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComType OLEDataTypeEnum value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1102 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComDefinedSize Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1103 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Procedure Set ComAttributes Integer value
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Set ComProperty of hDispatchDriver 1114 OLE_VT_I4 to value
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComStatus Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1116 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+End_Class
+
+// CLSID: {0000150D-0000-0010-8000-00AA006D2EA4}
+Class cComParameters is a cComAutomationObject
+
+    { MethodType=Property DesignTime=False }
+    Function ComCount Returns Integer
+        Handle hDispatchDriver
+        Integer retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver 1 OLE_VT_I4 to retVal
+        Function_Return retVal
+    End_Function
+
+    Function Com_NewEnum Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Get InvokeComMethod of hDispatchDriver -4 OLE_VT_UNKNOWN to retVal
+        Function_Return retVal
+    End_Function
+
+    Procedure ComRefresh
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send InvokeComMethod to hDispatchDriver 2 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComAppend Variant llObject
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_DISPATCH llObject
+        Send InvokeComMethod to hDispatchDriver 1610809344 OLE_VT_VOID
+    End_Procedure
+
+    Procedure ComDelete Variant llIndex
+        Handle hDispatchDriver
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Send InvokeComMethod to hDispatchDriver 1610809345 OLE_VT_VOID
+    End_Procedure
+
+    { MethodType=Property DesignTime=False }
+    Function ComItem Variant llIndex Returns Variant
+        Handle hDispatchDriver
+        Variant retVal
+        Get phDispatchDriver to hDispatchDriver
+        Send PrepareParams to hDispatchDriver 1
+        Send DefineParam to hDispatchDriver OLE_VT_VARIANT llIndex
+        Get InvokeComMethod of hDispatchDriver 0 OLE_VT_DISPATCH to retVal
+        Function_Return retVal
+    End_Function
+End_Class
