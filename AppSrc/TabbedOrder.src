@@ -1,0 +1,806 @@
+﻿Use OrderPrecompile.pkg
+Use Winuser.pkg
+
+Use DfAllent.pkg
+Use cCJStandardCommandBarSystem.pkg
+Use cToolTipController.pkg
+Use cCJCommandBarSystem.pkg
+
+Object oHtmlHelp is a cHtmlHelp
+End_Object
+
+Object oApplication is a cApplication
+    Set psCompany to "Data Access Worldwide"
+    Set psProduct to "DataFlex Examples"
+    Set psVersion to C_DFVersion
+    Set psProgram to "Order"
+    Set psHelpFile to "DevelopmentGuide.chm"
+    Set peHelpType to htHtmlHelp
+    Set pbPreserveEnvironment to False
+    
+    Object oConnection is a cConnection
+        Use LoginEncryption.pkg
+        Use DatabaseLoginDialog.dg
+    End_Object
+    
+End_Object
+
+Object oToolTipController is a cToolTipController
+    Move Self to ghoToolTipController
+End_Object
+
+Use oEditContextMenu.pkg
+Use oDEOEditContextMenu17.pkg
+
+Object oMain is a Panel
+    Set Label to "Tabbed Order Entry Sample Application"
+    Set Location to 4 3
+    Set Size to 300 450
+    
+    Object oCommandBarSystem is a cCJCommandBarSystem
+        Set pbTimerUpdate to True
+        Set peVisualTheme to xtpThemeOffice2016Access
+        Set pbAutoResizeIcons to True
+        Set pbTabbedWorkspaces to True
+        
+        // Experiment. If command line is passed "-NOTAB" the tabs workspace is not used.
+        // This lets us see how the scrolling views behave in a regular MDI environment.
+        // This is done in a command line because this can not be toggled on and off in a
+        // running program.
+        Procedure SetTabFromCommandLine
+            Handle hoCmd
+            Integer i iLines
+            String sLine
+            Get phoCommandLine of ghoApplication to hoCmd
+            Get CountOfArgs of hoCmd to iLines
+            For i from 1 to ilines
+                Get Argument of hoCmd i to sLine
+                If (Uppercase(sLine)="-NOTAB") Begin
+                    Set pbTabbedWorkspaces to False
+                    Procedure_Return
+                End
+            Loop
+        End_Procedure
+        
+        Procedure OnCreate
+            Send SetTabFromCommandLine
+            Forward Send OnCreate
+        End_Procedure
+        
+        Object oMenuBar is a cCJMenuBar
+            
+            Object oFileMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption   to "&File"
+                Set psDescription to "Find, Save, Delete, Clear information or quit this application."
+                Set psCategory to "Menus"
+                
+                Object oClearMenuItem is a cCJClearMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oClearAllMenu is a cCJClearAllMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oPromptMenuItem is a cCJPromptMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+                Object oFindMenuItem is a cCJFindMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+                Object oFindNextMenu is a cCJFindNextMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oFindPreviousMenu is a cCJFindPreviousMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oFindFirstMenu is a cCJFindFirstMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oFindLastMenu is a cCJFindLastMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oSaveMenuItem is a cCJSaveMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+                Object oDeleteMenuItem is a cCJDeleteMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+                
+                Object oExitMenu is a cCJExitMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+            End_Object
+            
+            Object oViewMenu is a cCJMenuItem
+                
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&View"
+                Set psToolTip to "View"
+                Set psDescription to "Available Views"
+                
+                Object oCustomerEntryViewMenuItem is a cCJMenuItem
+                    Set psCaption to "Tabbed Customer Entry View"
+                    Set psShortcut to "Ctrl+1"
+                    Set psDescription to "Add, edit and delete Customer data."
+                    Set psToolTip to "Tabbed Customer Entry View"
+                    
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oTabbedCustomerView of hoClient
+                    End_Procedure
+                End_Object
+                
+                Object oInventoryItemViewMenuItem is a cCJMenuItem
+                    Set psCaption to "Tabbed Inventory Item View"
+                    Set psShortcut to "Ctrl+2"
+                    Set psDescription to "Add, edit and delete Inventory data."
+                    Set psToolTip to "Tabbed Inventory Item View"
+                    
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oTabbedInventoryView of hoClient
+                    End_Procedure
+                End_Object
+                
+                Object oOrderEntryMenuItem is a cCJMenuItem
+                    Set psCaption to "Tabbed Order Entry"
+                    Set psShortcut to "Ctrl+3"
+                    Set psDescription to "Add, edit and delete Order data."
+                    Set psToolTip to "Tabbed Order Entry"
+                    
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oTabbedOrderEntryView of hoClient
+                    End_Procedure
+                End_Object
+                
+                Object oSalesPersonEntryViewMenuItem is a cCJMenuItem
+                    Set psCaption to "Tabbed Sales Person Entry View"
+                    Set psShortcut to "Ctrl+4"
+                    Set psDescription to "Add, edit and delete Sales Person data."
+                    Set psToolTip to "Tabbed Sales Person Entry View"
+                    
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oTabbedSalesPersonView of hoClient
+                    End_Procedure
+                End_Object
+                
+                Object oVendorEntryViewMenuItem is a cCJMenuItem
+                    Set psCaption to "Tabbed Vendor Entry View"
+                    Set psShortcut to "Ctrl+5"
+                    Set psDescription to "Add, edit and delete Vendor data."
+                    Set psToolTip to "Tabbed Vendor Entry View"
+                    
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oTabbedVendorView of hoClient
+                    End_Procedure
+                End_Object
+                
+            End_Object
+            
+            Object oReportMenu is a cCJMenuItem                
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Report"
+                Set psToolTip to "Report"
+                Set psDescription to "Available Reports"
+
+                Object oDataFlexReportsMenuItem is a cCJMenuItem
+                    Set psCaption to "DataFlex Reports"
+                    Set psTooltip to "DataFlex Reports"
+                    Set peControlType to xtpControlPopup
+
+                    Object oListofCustomersMenuItem is a cCJMenuItem
+                        Set psCaption to "List of Customers"
+                        Set psTooltip to "List of Customers"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oCustomerListReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oCustomerListDrillDownMenuItem is a cCJMenuItem
+                        Set psCaption to "Customer List (Drill-Down)"
+                        Set psTooltip to "Customer List with Drill-Down feature"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oCustomerListDrillDownReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oOrdersWithPagelayersMenuItem is a cCJMenuItem
+                        Set psCaption to "Orders with page layers"
+                        Set psTooltip to "Orders with page layers"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oOrderswithPagelayersReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oCustomerLabelsMenuItem is a cCJMenuItem
+                        Set psCaption to "Customer Labels"
+                        Set psTooltip to "Report with Customer Labels"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oCustomerLabelsReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oSalesperSalespersonperUSAStateMenuItem is a cCJMenuItem
+                        Set psCaption to "Sales per Salesperson per US State"
+                        Set psTooltip to "Sales per Salesperson per US State"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oSalesPerSalesPersonPerUSAStateReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oCustomerVendorRelationshipMenuItem is a cCJMenuItem
+                        Set psCaption to "Customer Vendor Relationship"
+                        Set psTooltip to "Shows which vendors delivered products to this Customer"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oCustomerVendorRelationshipReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oInventoryReportMenuItem is a cCJMenuItem
+                        Set psCaption to "Inventory Report"
+                        Set psTooltip to "Inventory Report"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oTabbedInventoryReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oSalesperStateperYearMenuItem is a cCJMenuItem
+                        Set psCaption to "Sales per State per Year"
+                        Set psTooltip to "Report with a Crosstab Showing the Sales per State per Year"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oSalesperStateperYearReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oDataOverviewMenuItem is a cCJMenuItem
+                        Set psCaption to "Data Overview"
+                        Set psTooltip to "List of Addresses, Delivery and Payment Methods and Salespersons"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oDataOverviewReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oMyPicturesGalleryMenuItem is a cCJMenuItem
+                        Set psCaption to "My Pictures Gallery"
+                        Set psTooltip to "Report Showing Images on This Computer"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oMyPicturesGalleryReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oTableUsageMenuItem is a cCJMenuItem
+                        Set psCaption to "Table Usage"
+                        Set psTooltip to "Shows How Many Rows are Used per Table"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oTableUsageReportView of hoClient
+                        End_Procedure
+                    End_Object
+
+                    Object oReportInfoMenuItem is a cCJMenuItem
+                        Set psCaption to "Report Info"
+                        Set psTooltip to "Shows Information About a Report"
+                    
+                        Procedure OnExecute Variant vCommandBarControl
+                            Handle hoClient
+                            Get Client_Id to hoClient
+                            Send Activate_oReportInfoView of hoClient
+                        End_Procedure
+                    End_Object
+                End_Object
+                
+            End_Object
+            
+            Object oNavigateMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Navigate"
+                Set psTooltip to "Navigate"
+                Set psDescription to "Move to different areas of the application"
+                
+                Object oNextAreaMenu is a cCJNextAreaMenu
+                End_Object
+                
+                Object oPriorAreaMenu is a cCJPriorAreaMenu
+                End_Object
+                
+                Object oNextViewMenu is a cCJNextViewMenu
+                End_Object
+                
+                Object oPriorViewMenu is a cCJPriorViewMenu
+                End_Object
+                
+                Object oPromptMenu is a cCJPromptMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+                Object oZoomMenu is a cCJZoomMenuItem
+                End_Object
+                
+            End_Object
+            
+            Object oWindowMenu is a cCJMDIWindowsMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Window"
+                Set psToolTip to "Window"
+                Set psDescription to "Display Current Views and set other display options."
+                
+                // These are the static windows items. More will be created in onInitPopup
+                Object oDisplayOptionsMenu is a cCJMenuItem
+                    Set peControlType to xtpControlPopup
+                    Set psCaption to "&Display Options"
+                    Set psToolTip to "Display Options"
+                    Set psDescription to "Set display options"
+                    
+                    Object oStatusbarMenu is a cCJStatusbarMenuItem
+                    End_Object
+                    
+                    Object oAutoArrangeIconsMenu is a cCJAutoArrangeIconsMenuItem
+                    End_Object
+                    
+                    Object oRestoreMenusMenu is a cCJRestoreMenusMenuItem
+                        Set pbControlBeginGroup to True
+                    End_Object
+                    
+                End_Object
+                
+                Object oCascadeMenu is a cCJCascadeMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+                Object oHorizTile is a cCJTileHorizontally
+                End_Object
+                
+                Object oVertTile is a cCJTileVertically
+                End_Object
+                
+                Object oMinimizeMenuItem is a cCJMinimizeWindowsMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+                Object oRestoreMenuItem is a cCJRestoreWindowsMenuItem
+                End_Object
+                
+                Object oArrangeIconsMenuItem is a cCJAutoArrangeIconsMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+                
+            End_Object
+            
+           
+            Object oHelpMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Help"
+                Set psDescription to "Access Information for learning and using this DataFlex application."
+                Set psToolTip to "Help"
+                
+                Object oHelpMenuItem is a cCJHelpMenuItem
+                End_Object
+                
+                Object oAboutMenuItem is a cCJAboutMenuItem
+                End_Object
+                
+            End_Object
+            
+        End_Object
+        
+        Object oFindToolBar is a cCJToolbar
+            Set psTitle to "Finding Toolbar"
+            
+            Object oFindFirstTool is a cCJFindFirstMenuItem
+            End_Object
+            
+            Object oFindPreviousTool is a cCJFindPreviousMenuItem
+            End_Object
+            
+            Object oFindMenuTool is a cCJFindMenuItem
+            End_Object
+            
+            Object oFindNextTool is a cCJFindNextMenuItem
+            End_Object
+            
+            Object oFindLastTool is a cCJFindLastMenuItem
+            End_Object
+            
+            Object oPromptToolItem is a cCJPromptMenuItem
+                Set pbControlBeginGroup to True
+            End_Object
+            
+            Object oMenuItem1 is a cCJMenuItem
+                Set psImage to "All.ico"
+            End_Object
+            
+        End_Object
+        
+        Object oFileToolBar is a cCJToolbar
+            Set psTitle to "Data Entry Toolbar"
+            
+            Object oClearToolItem is a cCJClearMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+            
+            Object oClearAllToolItem2 is a cCJClearAllMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+            
+            Object oSaveToolItem is a cCJSaveMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+                Set pbControlBeginGroup to True
+            End_Object
+            
+            Object oDeleteToolItem is a cCJDeleteMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+            
+        End_Object
+        
+        Object oEditToolBar is a cCJToolbar
+            Set psTitle to "Edit Toolbar"
+            
+            Object oCutToolbarItem is a cCJCutMenuItem
+            End_Object
+            
+            Object oCopyToolbarItem is a cCJCopyMenuItem
+            End_Object
+            
+            Object oPasteToolbarItem is a cCJPasteMenuItem
+            End_Object
+            
+            Object oDeleteEditToolbarItem is a cCJDeleteEditMenuItem
+                Set pbControlBeginGroup to True
+            End_Object
+            
+        End_Object
+        
+        Object oRememberToolbar is a cCJToolbar
+            Set psTitle to "Remember Toolbar"
+            
+            Object oRememberItems is a cCJMenuItem
+                
+                Set peControlType to xtpControlPopup
+                Set peControlStyle to xtpButtonCaption
+                Set psCaption to C_$Remember
+                
+                Object oMenuItem is a cCJRememberFieldMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+                Object oMenuItem is a cCJRememberLastFieldMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+                Object oMenuItem is a cCJUnRememberFieldMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+                Object oMenuItem is a cCJUnRememberFieldAllMenuItem
+                    Set peControlStyle to xtpButtonIconAndCaption
+                End_Object
+                
+            End_Object
+            
+        End_Object
+        
+        Object oThemeToolbar is a cCJToolbar
+            Set pbDockNextTo to False
+            
+            Object oThemeItem is a cCJMenuItem
+                Set peControlType to xtpControlComboBox
+                
+
+                Function RatioForDPI Returns Integer
+                    Integer iMetrics
+                    Number nValue
+                
+                    Move (GetSystemMetrics(SM_CXSMICON)) to iMetrics
+                    Case Begin
+                        Case (iMetrics = 16)
+                            Move 1 to nValue
+                            Case Break
+                        Case (iMetrics <= 20)
+                            Move 1.25 to nValue
+                            Case Break
+                        Case (iMetrics <= 24)
+                            Move 1.5 to nValue
+                            Case Break
+                        Case (iMetrics <= 28)
+                            Move 1.75 to nValue
+                            Case Break
+                        Case (iMetrics <= 32)
+                            Move 2 to nValue
+                            Case Break
+                        Case Else
+                            Move 2.25 to nValue
+                            Case Break
+                    Case End                    
+                    
+                    Function_Return nValue
+                End_Function
+                
+                Procedure OnCreateControl Handle hoObj
+                    Variant vVar
+                    Integer iItem eTheme
+                    Number nMultiplier 
+                    
+                    Get RatioForDPI to nMultiplier                    
+                    Set ComWidth of hoObj to (Integer(230 * nMultiplier))
+                    
+                    Send FillComboList hoObj
+                    Get peVisualTheme to eTheme
+                    Get FindDataItem hoObj eTheme to iItem
+                    Set ComListIndex of hoObj to (If(iItem,iItem,1))
+                End_Procedure
+                
+                Function FindDataItem Handle hoCombo Integer eVal Returns Integer
+                    Integer iCount i eTheme
+                    
+                    Get ComListCount of hoCombo to iCount
+                    For i from 1 to iCount
+                        Get ComItemData  of hoCombo i to  eTheme
+                        If (eTheme=eVal) Begin
+                            Function_Return i
+                        End
+                    Loop
+                    
+                    Function_Return 0
+                End_Function
+                
+                Procedure AddTheme Handle hoCombo String sText Integer eTheme
+                    Integer iCount
+                    
+                    Get ComListCount of hoCombo to iCount
+                    Increment iCount
+                    Send ComAddItem of hoCombo sText iCount
+                    Set ComItemData of hoCombo iCount to eTheme
+                End_Procedure
+                
+                Procedure FillComboList Handle hoCombo
+                    Send ComClear     of hoCombo
+                    
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2022Blue" xtpThemeVisualStudio2022Blue
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2022BlueExtra" xtpThemeVisualStudio2022BlueExtra
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2022Dark" xtpThemeVisualStudio2022Dark
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2022Light" xtpThemeVisualStudio2022Light
+                    
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2019Blue" xtpThemeVisualStudio2019Blue
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2019BlueExtra" xtpThemeVisualStudio2019BlueExtra
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2019Dark" xtpThemeVisualStudio2019Dark
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2019Light" xtpThemeVisualStudio2019Light
+                    
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2017Blue" xtpThemeVisualStudio2017Blue
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2017BlueExtra" xtpThemeVisualStudio2017BlueExtra
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2017Dark" xtpThemeVisualStudio2017Dark
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2017Light" xtpThemeVisualStudio2017Light
+                    
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2015Blue" xtpThemeVisualStudio2015Blue    
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2015Dark" xtpThemeVisualStudio2015Dark
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2015Light" xtpThemeVisualStudio2015Light
+
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2012Dark" xtpThemeVisualStudio2012Dark
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2012Light" xtpThemeVisualStudio2012Light
+                    
+                    Send AddTheme hoCombo "xtpThemeVisualStudio2008" xtpThemeVisualStudio2008
+                    Send AddTheme hoCombo "xtpThemeVisualStudio6" xtpThemeVisualStudio6                    
+                    
+                    Send AddTheme hoCombo "xtpThemeWindows10Dark" xtpThemeWindows10Dark
+                    Send AddTheme hoCombo "xtpThemeWindows7" xtpThemeWindows7
+                    Send AddTheme hoCombo "xtpThemeNativeWinXP" xtpThemeNativeWinXP                     
+                    Send AddTheme hoCombo "xtpThemeWhidbey" xtpThemeWhidbey     
+                                   
+                    Send AddTheme hoCombo "xtpThemeOffice2016Access" xtpThemeOffice2016Access
+                    Send AddTheme hoCombo "xtpThemeOffice2016AccessBlack" xtpThemeOffice2016AccessBlack
+                    Send AddTheme hoCombo "xtpThemeOffice2016Excel" xtpThemeOffice2016Excel
+                    Send AddTheme hoCombo "xtpThemeOffice2016OneNote" xtpThemeOffice2016OneNote
+                    Send AddTheme hoCombo "xtpThemeOffice2016Outlook" xtpThemeOffice2016Outlook
+                    Send AddTheme hoCombo "xtpThemeOffice2016Publisher" xtpThemeOffice2016Publisher
+                    Send AddTheme hoCombo "xtpThemeOffice2016PowerPoint" xtpThemeOffice2016PowerPoint
+                    Send AddTheme hoCombo "xtpThemeOffice2016Word" xtpThemeOffice2016Word
+                                        
+                    Send AddTheme hoCombo "xtpThemeOffice2013Access" xtpThemeOffice2013Access
+                    Send AddTheme hoCombo "xtpThemeOffice2013Excel" xtpThemeOffice2013Excel
+                    Send AddTheme hoCombo "xtpThemeOffice2013OneNote" xtpThemeOffice2013OneNote
+                    Send AddTheme hoCombo "xtpThemeOffice2013Outlook" xtpThemeOffice2013Outlook
+                    Send AddTheme hoCombo "xtpThemeOffice2013PowerPoint" xtpThemeOffice2013PowerPoint
+                    Send AddTheme hoCombo "xtpThemeOffice2013Publisher" xtpThemeOffice2013Publisher
+                    Send AddTheme hoCombo "xtpThemeOffice2013Word" xtpThemeOffice2013Word
+                    
+                    Send AddTheme hoCombo "xtpThemeOffice2010" xtpThemeOffice2010
+                    Send AddTheme hoCombo "xtpThemeOffice2010Blue" xtpThemeOffice2010Blue
+                    Send AddTheme hoCombo "xtpThemeOffice2010Black" xtpThemeOffice2010Black
+                    Send AddTheme hoCombo "xtpThemeOffice2010Silver" xtpThemeOffice2010Silver                    
+    
+                    Send AddTheme hoCombo "xtpThemeOffice2007Aqua" xtpThemeOffice2007Aqua
+                    Send AddTheme hoCombo "xtpThemeOffice2007Black" xtpThemeOffice2007Black
+                    Send AddTheme hoCombo "xtpThemeOffice2007Blue" xtpThemeOffice2007Blue
+                    Send AddTheme hoCombo "xtpThemeOffice2007Silver" xtpThemeOffice2007Silver
+                    
+                    Send AddTheme hoCombo "xtpThemeOffice2003" xtpThemeOffice2003
+                    Send AddTheme hoCombo "xtpThemeOffice2000" xtpThemeOffice2000
+                    Send AddTheme hoCombo "xtpThemeOfficeXP" xtpThemeOfficeXP                      
+                    
+                 End_Procedure
+                
+                
+                Function CurrentTheme Handle vCommandBarControl Returns Integer
+                    Handle hMessage hoClient hoCombo
+                    Integer iIndex
+                    
+                    // create and bind  proxy control
+                    Get CreateProxyControl vCommandBarControl to hoCombo
+                    // get the current selection
+                    Get ComListIndex of hoCombo to iIndex
+                    // note the index selections are 1 based
+                    If (iIndex > 0) Begin
+                        // get the ItemData for the selected item and send that message
+                        Get ComItemData of hoCombo iIndex to hMessage
+                        Function_Return hMessage
+                    End
+                    // dispose of the proxy control
+                    Send destroy of hoCombo
+                End_Function
+                
+                Procedure OnExecute Variant vCommandBarControl
+                    Integer eTheme
+                    
+                    Get CurrentTheme vCommandBarControl to eTheme
+                    Set peVisualTheme of ghoCommandBars to eTheme
+                    Send ComRecalcLayout of ghoCommandBars
+                End_Procedure
+                
+                Procedure SetTheTheme Integer eTheme
+                    Set peVisualTheme of ghoCommandBars to eTheme
+                    Send ComRecalcLayout of ghoCommandBars
+                End_Procedure
+                
+                Procedure OnUpdate
+                    
+                End_Procedure
+            End_Object
+            
+            Object oCenterViewMenuItem is a cCJMenuItem
+                Set peControlType to xtpControlCheckBox
+                Set psCaption to "Center Views"
+                Set pbChecked to True
+                Procedure OnExecute Variant vCommandBarControl
+                    Boolean bOn
+                    Get pbCenterTabbedViews of ghoCommandBars  to bOn
+                    Move (not(bOn)) to bOn
+                    Set pbCenterTabbedViews of ghoCommandBars to bOn
+                    Set pbChecked to bOn
+                    Set GuiSize of oMain to (Hi(GuiSize(oMain))-1) (Low(GuiSize(oMain)))
+                    Set GuiSize of oMain to (Hi(GuiSize(oMain))+1) (Low(GuiSize(oMain)))
+                End_Procedure
+            End_Object
+            
+            Object oToggleDPIScalingMenuItem is a cCJMenuItem
+                Set peControlType to xtpControlCheckBox
+                Set psCaption to "Toggle DPI Scaling"
+                Set psTooltip to "Toggle DPI Scaling"
+                Set pbChecked to True
+                
+                Procedure OnExecute Variant vCommandBarControl
+                    Boolean bAutoResize
+                    
+                    Get pbAutoResizeIcons of ghoCommandBars to bAutoResize
+                    Set pbAutoResizeIcons of ghoCommandBars to (not(bAutoResize))
+                    Send ComRecalcLayout of ghoCommandBars
+                    Set pbChecked to (not(bAutoResize))
+                End_Procedure
+                
+            End_Object
+            
+           
+        End_Object
+        
+        
+        Object oStatusBar is a cCJStatusBar
+            
+            Object oStatusPane1 is a cCJStatusBarPane
+                Set piID to sbpIDIdlePane
+                Set pbStyleStretch to True
+            End_Object
+            
+            Object oStatusPane2 is a cCJStatusBarPane
+                Set phoViewPane to Self
+                Set pbStyleStretch to True
+            End_Object
+            
+        End_Object
+        
+    End_Object
+    
+    Object oClientArea is a ClientArea
+        Use TabbedCustomer.vw
+        Use TabbedInventory.vw
+        Use TabbedOrder.vw
+        Use TabbedSalesPerson.vw
+        Use TabbedVendor.vw
+        
+        
+        On_Key Key_Ctrl+Key_1 Send Activate_oTabbedCustomerView
+        On_Key Key_Ctrl+Key_2 Send Activate_oTabbedInventoryView
+        On_Key Key_Ctrl+Key_3 Send Activate_oTabbedOrderEntryView
+        On_Key Key_Ctrl+Key_4 Send Activate_oTabbedSalesPersonView
+        On_Key Key_Ctrl+Key_5 Send Activate_oTabbedVendorView
+        
+        Use StdAbout.pkg
+
+        // DataFlex Reports report views
+        Use DataFlexReports\SalesPerStatePerYear.rv
+        Use DataFlexReports\CustomerLabels.rv
+        Use DataFlexReports\CustomerList.rv
+        Use DataFlexReports\DrillDownCustomerList.rv
+        Use DataFlexReports\TabbedInventoryReportView.rv
+        Use DataFlexReports\TableUsage.rv
+        Use DataFlexReports\ReportInfo.vw
+        Use DataFlexReports\DataOverviewReport.rv
+        Use DataFlexReports\MyPicturesGallery.rv
+        Use DataFlexReports\CustomerVendorRelationshipReport.rv
+        Use DataFlexReports\OrderswithPagelayersReport.rv
+        Use DataFlexReports\SalesPerSalesPersonPerUSAState.rv
+        
+        
+        
+        
+        Procedure Activate_About
+            Send DoAbout "Order Entry Tab Sample Application" "24.0.24.43" "Copyright 2005-2024 Data Access Corporation. All rights reserved." "Data Access Worldwide" ""
+        End_Procedure
+                
+    End_Object
+    
+    
+End_Object
+
+Start_UI
