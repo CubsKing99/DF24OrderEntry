@@ -17,9 +17,9 @@ Use cCJGridColumnRowIndicator.pkg
 
 Use MonthCalendarPrompt.dg
 
-Use cDRReport.pkg
-Use cDRPreview.pkg
-Use DRStatuspanel.dg
+//Use cDRReport.pkg
+//Use cDRPreview.pkg
+//Use DRStatuspanel.dg
 
 Activate_View Activate_oOrderEntryView for oOrderEntryView
 Object oOrderEntryView is a dbView
@@ -293,56 +293,56 @@ Object oOrderEntryView is a dbView
     Set Verify_Delete_MSG     to (RefFunc(Confirm_Delete_Order))
     Set Auto_Clear_DEO_State  to False // don't clear Header on save
 
-    Object oOrderReport is a cDRReport
-        Set pbShowStatusPanel to True
-        Set phoStatusPanel to oDRStatusPanel
-        Set psReportName to "Orders with Pagelayers.dr"
-        Set peOutputDestination to PRINT_TO_WINDOW
-
-        Procedure OnCreate
-            String sReportId
-
-            Forward Send OnCreate
-
-            Get psReportId to sReportId
-            Set piReportLanguage sReportId to LANG_DEFAULT
-        End_Procedure
-
-        Procedure OnInitializeReport
-            Forward Send OnInitializeReport
-
-            Send SetFilters
-            Send SetParameters
-        End_Procedure
-
-        // Determine the path to the codemast.dat table and set the report parameter
-        Procedure SetParameters
-            String sReportId sCodeMastPath
-            Integer iParameter
-
-            Get psReportId to sReportId
-
-            Get_File_Path "CodeMast.dat" to sCodeMastPath
-            Move (ExtractFilePath (sCodeMastPath)) to sCodeMastPath
-            Get ParameterIdByName sReportId "CodeMastPath" to iParameter
-            Set psParameterValue sReportId iParameter to sCodeMastPath
-        End_Procedure
-
-        // Set the report filter to the current orderheader ordernumber
-        Procedure SetFilters
-            String sReportId
-            String sOrderHeaderOrderNumber
-
-            Get psReportId to sReportId
-
-            // Remove all the defined filters from the report
-            Send RemoveAllFilters sReportId
-
-            // Get the current order number from the Orderheader DDO
-            Get Field_Current_Value of oOrderHeaderDataDictionary Field Orderheader.Order_Number to sOrderHeaderOrderNumber
-            Send AddFilter sReportId "{OrderHeader.Order_Number}" C_drEqual sOrderHeaderOrderNumber
-        End_Procedure
-    End_Object
+//    Object oOrderReport is a cDRReport
+//        Set pbShowStatusPanel to True
+//        Set phoStatusPanel to oDRStatusPanel
+//        Set psReportName to "Orders with Pagelayers.dr"
+//        Set peOutputDestination to PRINT_TO_WINDOW
+//
+//        Procedure OnCreate
+//            String sReportId
+//
+//            Forward Send OnCreate
+//
+//            Get psReportId to sReportId
+//            Set piReportLanguage sReportId to LANG_DEFAULT
+//        End_Procedure
+//
+//        Procedure OnInitializeReport
+//            Forward Send OnInitializeReport
+//
+//            Send SetFilters
+//            Send SetParameters
+//        End_Procedure
+//
+//        // Determine the path to the codemast.dat table and set the report parameter
+//        Procedure SetParameters
+//            String sReportId sCodeMastPath
+//            Integer iParameter
+//
+//            Get psReportId to sReportId
+//
+//            Get_File_Path "CodeMast.dat" to sCodeMastPath
+//            Move (ExtractFilePath (sCodeMastPath)) to sCodeMastPath
+//            Get ParameterIdByName sReportId "CodeMastPath" to iParameter
+//            Set psParameterValue sReportId iParameter to sCodeMastPath
+//        End_Procedure
+//
+//        // Set the report filter to the current orderheader ordernumber
+//        Procedure SetFilters
+//            String sReportId
+//            String sOrderHeaderOrderNumber
+//
+//            Get psReportId to sReportId
+//
+//            // Remove all the defined filters from the report
+//            Send RemoveAllFilters sReportId
+//
+//            // Get the current order number from the Orderheader DDO
+//            Get Field_Current_Value of oOrderHeaderDataDictionary Field Orderheader.Order_Number to sOrderHeaderOrderNumber
+//            Send AddFilter sReportId "{OrderHeader.Order_Number}" C_drEqual sOrderHeaderOrderNumber
+//        End_Procedure
+//    End_Object
 
     // print the current order. This message will be sent by the print button
     Procedure PrintCurrentOrder
@@ -350,7 +350,7 @@ Object oOrderEntryView is a dbView
 
         Get HasRecord of oOrderHeaderDataDictionary to bHasRecord
         If (bHasRecord) Begin // only do this if record exists
-            Send RunReport of oOrderReport
+//            Send RunReport of oOrderReport
         End
     End_Procedure
 

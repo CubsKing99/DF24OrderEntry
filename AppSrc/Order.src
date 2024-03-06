@@ -177,229 +177,6 @@ Object oMain is a Panel
                 
             End_Object
             
-            Object oReportMenu is a cCJMenuItem                
-                Set peControlType to xtpControlPopup
-                Set psCaption to "&Report"
-                Set psToolTip to "Report"
-                Set psDescription to "Available Reports"
-
-                Object oDataFlexReportsMenuItem is a cCJMenuItem
-                    Set psCaption to "DataFlex Reports"
-                    Set psTooltip to "DataFlex Reports"
-                    Set peControlType to xtpControlPopup
-
-                    Object oListofCustomersMenuItem is a cCJMenuItem
-                        Set psCaption to "List of Customers"
-                        Set psTooltip to "Configurable list of customers"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oCustomerListReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oCustomerListDrillDownMenuItem is a cCJMenuItem
-                        Set psCaption to "Customer List (Drill-Down)"
-                        Set psTooltip to "Customer list with drill-down feature"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oCustomerListDrillDownReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oOrdersWithPagelayersMenuItem is a cCJMenuItem
-                        Set psCaption to "Orders with Page Layers"
-                        Set psTooltip to "Orders with page layers"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oOrderswithPagelayersReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oCustomerLabelsMenuItem is a cCJMenuItem
-                        Set psCaption to "Customer Labels"
-                        Set psTooltip to "Report with Customer Labels"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oCustomerLabelsReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oSalesperSalespersonperUSAStateMenuItem is a cCJMenuItem
-                        Set psCaption to "Sales per Salesperson per US State"
-                        Set psTooltip to "Sales per salesperson per US State"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oSalesPerSalesPersonPerUSAStateReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oCustomerVendorRelationshipMenuItem is a cCJMenuItem
-                        Set psCaption to "Customer Vendor Relationship"
-                        Set psTooltip to "Shows which vendors delivered products to this Customer"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oCustomerVendorRelationshipReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oInventoryReportMenuItem is a cCJMenuItem
-                        Set psCaption to "Inventory Report"
-                        Set psTooltip to "Inventory Report"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oInventoryReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oSalesperStateperYearMenuItem is a cCJMenuItem
-                        Set psCaption to "Sales per State per Year"
-                        Set psTooltip to "Report with a Crosstab Showing the Sales per State per Year"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oSalesperStateperYearReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oDataOverviewMenuItem is a cCJMenuItem
-                        Set psCaption to "Data Overview"
-                        Set psTooltip to "List of Addresses, Delivery and Payment Methods and Salespersons"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oDataOverviewReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oMyPicturesGalleryMenuItem is a cCJMenuItem
-                        Set psCaption to "My Pictures Gallery"
-                        Set psTooltip to "Report Showing Images on This Computer"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oMyPicturesGalleryReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oTableUsageMenuItem is a cCJMenuItem
-                        Set psCaption to "Table Usage"
-                        Set psTooltip to "Shows How Many Rows are Used per Table"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oTableUsageReportView of hoClient
-                        End_Procedure
-                    End_Object
-
-                    Object oReportInfoMenuItem is a cCJMenuItem
-                        Set psCaption to "Report Info"
-                        Set psTooltip to "Shows Information About a Report"
-                    
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oReportInfoView of hoClient
-                        End_Procedure
-                    End_Object
-                End_Object
-                
-                Object oBasicReportsMenuItem is a cCJMenuItem
-                    Set psCaption to "Basic Reports"
-                    Set peControlType to xtpControlPopup
-                    Set psToolTip to "Basic Reports"
-                    Set psDescription to "Reports based on the Basic Report class."
-                    
-                    Object oCustomerListMenuItem is a cCJMenuItem
-                        Set psCaption to "Customer List"
-                        Set psToolTip to "Customer List (Basic)"
-                        
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oCustomerListBR of hoClient
-                        End_Procedure
-                    End_Object
-                End_Object
-                
-                Object oWinPrintReportsMenuItem is a cCJMenuItem
-                    Set psCaption to "WinPrint Reports"
-                    Set peControlType to xtpControlPopup
-                    Set psToolTip to "WinPrint Reports"
-                    Set psDescription to "Reports based on the WinPrint class."
-                    
-                    Object oCustomerListMenuItem2 is a cCJMenuItem
-                        Set psCaption to "Customer List"
-                        Set psShortcut to "Ctrl+6"
-                        Set psToolTip to "Customer List (WinPrint)"
-                        Set psDescription to "Print Customer data."
-                        
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oCustomerListWP of hoClient
-                        End_Procedure
-                    End_Object
-                    
-                    Object oItemsperOrderMenuItem is a cCJMenuItem
-                        Set psCaption to "Items per Order"
-                        Set psShortcut to "Ctrl+7"
-                        Set psToolTip to "Items per Order (WinPrint)"
-                        Set psDescription to "Print line items for all Orders"
-                        
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oItemsPerOrderWP of hoClient
-                        End_Procedure
-                    End_Object
-                    
-                    Object oOrdersbyCustomerMenuItem1 is a cCJMenuItem
-                        Set psCaption to "Orders by Customer"
-                        Set psShortcut to "Ctrl+8"
-                        Set psToolTip to "Orders by Customer (WinPrint)"
-                        Set psDescription to "Print Order data sorted by Customer"
-                        
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oOrdersByCustomerWP of hoClient
-                        End_Procedure
-                    End_Object
-                    
-                    Object oOrdersbyOrderNumberMenuItem is a cCJMenuItem
-                        Set psCaption to "Orders by Order Number"
-                        Set psShortcut to "Ctrl+9"
-                        Set psToolTip to "Orders by Order Number (WinPrint)"
-                        Set psDescription to "Print Order data"
-                        
-                        Procedure OnExecute Variant vCommandBarControl
-                            Handle hoClient
-                            Get Client_Id to hoClient
-                            Send Activate_oOrdersWP of hoClient
-                        End_Procedure
-                    End_Object
-                End_Object
-                
-            End_Object
-            
             Object oNavigateMenu is a cCJMenuItem
                 Set peControlType to xtpControlPopup
                 Set psCaption to "&Navigate"
@@ -702,19 +479,19 @@ Object oMain is a Panel
         Use DemoDialogs.vw
         Use DemoParentCombos.vw
         
-        // DataFlex Reports report views
-        Use DataFlexReports\SalesPerStatePerYear.rv
-        Use DataFlexReports\CustomerLabels.rv
-        Use DataFlexReports\CustomerList.rv
-        Use DataFlexReports\DrillDownCustomerList.rv
-        Use DataFlexReports\InventoryReportView.rv
-        Use DataFlexReports\TableUsage.rv
-        Use DataFlexReports\ReportInfo.vw
-        Use DataFlexReports\DataOverviewReport.rv
-        Use DataFlexReports\MyPicturesGallery.rv
-        Use DataFlexReports\CustomerVendorRelationshipReport.rv
-        Use DataFlexReports\OrderswithPagelayersReport.rv
-        Use DataFlexReports\SalesPerSalesPersonPerUSAState.rv
+//        // DataFlex Reports report views
+//        Use DataFlexReports\SalesPerStatePerYear.rv
+//        Use DataFlexReports\CustomerLabels.rv
+//        Use DataFlexReports\CustomerList.rv
+//        Use DataFlexReports\DrillDownCustomerList.rv
+//        Use DataFlexReports\InventoryReportView.rv
+//        Use DataFlexReports\TableUsage.rv
+//        Use DataFlexReports\ReportInfo.vw
+//        Use DataFlexReports\DataOverviewReport.rv
+//        Use DataFlexReports\MyPicturesGallery.rv
+//        Use DataFlexReports\CustomerVendorRelationshipReport.rv
+//        Use DataFlexReports\OrderswithPagelayersReport.rv
+//        Use DataFlexReports\SalesPerSalesPersonPerUSAState.rv
         Use DemoWindowsTags.vw
         
         

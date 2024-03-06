@@ -9,8 +9,8 @@ Use cCJStandardMenuItemClasses.pkg
 Use cVendorDataDictionary.dd
 Use cInventoryDataDictionary.dd
 
-Use cDRReport.pkg
-Use cDRPreview.pkg
+//Use cDRReport.pkg
+//Use cDRPreview.pkg
 
 // This enhanced example add a custom floating menu to the ID entry field. The floating menu adds an option
 // to run a report that shows which customers are ordering the current product/inventory item. The menu option
@@ -107,60 +107,60 @@ Object oInventoryView is a dbView
             Object oCJClearAllDynamicDefaults is a cCJUnRememberFieldAllMenuItem
             End_Object
 
-            Object oOrderedbyMenuItem is a cCJMenuItem
-                Set pbControlBeginGroup to True
-                Set psCaption to "Ordered by"
-                Set psDescription to "Show Customers Ordering this product"
-
-                Procedure OnExecute Variant vCommandBarControl
-                    Send RunReport of oCustomersOrderingReport
-                End_Procedure
-
-                Function IsEnabled Returns Boolean
-                    String sItemId
-
-                    Get Field_Current_Value of oInventoryDataDictionary Field Inventory.Item_ID to sItemId
-
-                    Function_Return (sItemId <> "")
-                End_Function
-            End_Object
+//            Object oOrderedbyMenuItem is a cCJMenuItem
+//                Set pbControlBeginGroup to True
+//                Set psCaption to "Ordered by"
+//                Set psDescription to "Show Customers Ordering this product"
+//
+//                Procedure OnExecute Variant vCommandBarControl
+//                    Send RunReport of oCustomersOrderingReport
+//                End_Procedure
+//
+//                Function IsEnabled Returns Boolean
+//                    String sItemId
+//
+//                    Get Field_Current_Value of oInventoryDataDictionary Field Inventory.Item_ID to sItemId
+//
+//                    Function_Return (sItemId <> "")
+//                End_Function
+//            End_Object
         End_Object
     End_Object
 
-    Object oCustomersOrderingReport is a cDRReport
-        Set psReportName to "Customers Ordering this Inventory Item.dr"
-        
-        // In the report the section ID is set to the current customer number value. The parameter
-        // iSectionID is for documentary reasons renamed to iCustomerNumber
-        Procedure OnReportPreviewClick C_DRHitTests iPos Integer iCustomerNumber String sObject String sValue
-            Handle hoServer
-            
-            Send Activate_oCustomerView
-            Get Server of oCustomerView to hoServer
-            Set Field_Current_Value of hoServer Field Customer.Customer_Number to iCustomerNumber
-            Send File_Field_AutoFind of hoServer File_Field Customer.Customer_Number Eq
-        End_Procedure
-        
-        Procedure OnInitializeReport
-            String sReportId sItemId
-            Integer iParameter
-
-            Forward Send OnInitializeReport
-            
-            Get psReportId to sReportId
-
-            // Alter the predefined filter in the report
-            Get Field_Current_Value of oInventoryDataDictionary Field Inventory.Item_ID to sItemId
-            Set psFilterValue sReportId 0 to sItemId
-            
-            // Set the value of a parameter. The value is used in the report to tell the user what
-            // the report shows. The report has no access to the filters defined as text string and
-            // the filter expert filter cannot use a parameter value. This means the value needs to 
-            // be set in two different places.
-            Get ParameterIdByName sReportId "InventoryItemId" to iParameter
-            Set psParameterValue sReportId iParameter to sItemId
-        End_Procedure
-    End_Object
+//    Object oCustomersOrderingReport is a cDRReport
+//        Set psReportName to "Customers Ordering this Inventory Item.dr"
+//        
+//        // In the report the section ID is set to the current customer number value. The parameter
+//        // iSectionID is for documentary reasons renamed to iCustomerNumber
+//        Procedure OnReportPreviewClick C_DRHitTests iPos Integer iCustomerNumber String sObject String sValue
+//            Handle hoServer
+//            
+//            Send Activate_oCustomerView
+//            Get Server of oCustomerView to hoServer
+//            Set Field_Current_Value of hoServer Field Customer.Customer_Number to iCustomerNumber
+//            Send File_Field_AutoFind of hoServer File_Field Customer.Customer_Number Eq
+//        End_Procedure
+//        
+//        Procedure OnInitializeReport
+//            String sReportId sItemId
+//            Integer iParameter
+//
+//            Forward Send OnInitializeReport
+//            
+//            Get psReportId to sReportId
+//
+//            // Alter the predefined filter in the report
+//            Get Field_Current_Value of oInventoryDataDictionary Field Inventory.Item_ID to sItemId
+//            Set psFilterValue sReportId 0 to sItemId
+//            
+//            // Set the value of a parameter. The value is used in the report to tell the user what
+//            // the report shows. The report has no access to the filters defined as text string and
+//            // the filter expert filter cannot use a parameter value. This means the value needs to 
+//            // be set in two different places.
+//            Get ParameterIdByName sReportId "InventoryItemId" to iParameter
+//            Set psParameterValue sReportId iParameter to sItemId
+//        End_Procedure
+//    End_Object
 
     Object oInventory_Description is a dbForm
         Entry_Item Inventory.Description
