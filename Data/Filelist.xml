@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<ArrayOfFilelistEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<FilelistEntry>
+		<TableNumber>0</TableNumber>
+		<sFileName>Filelist.cfg</sFileName>
+		<sTableName/>
+		<sDescription/>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>20</TableNumber>
+		<sFileName>OrderSystem</sFileName>
+		<sTableName>OrderSystem</sTableName>
+		<sDescription>Order Entry System Table</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>21</TableNumber>
+		<sFileName>Vendor</sFileName>
+		<sTableName>Vendor</sTableName>
+		<sDescription>Vendors</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>22</TableNumber>
+		<sFileName>Inventory</sFileName>
+		<sTableName>Inventory</sTableName>
+		<sDescription>Inventory Parts</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>25</TableNumber>
+		<sFileName>Customer</sFileName>
+		<sTableName>Customer</sTableName>
+		<sDescription>Customers</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>27</TableNumber>
+		<sFileName>SalesPerson</sFileName>
+		<sTableName>SalesPerson</sTableName>
+		<sDescription>Sales People</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>30</TableNumber>
+		<sFileName>OrderHeader</sFileName>
+		<sTableName>OrderHeader</sTableName>
+		<sDescription>Order Header</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>31</TableNumber>
+		<sFileName>OrderDetail</sFileName>
+		<sTableName>OrderDetail</sTableName>
+		<sDescription>Order Detail</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>50</TableNumber>
+		<sFileName>FlexErrs</sFileName>
+		<sTableName>FlexErrs</sTableName>
+		<sDescription>@DataFlex Error Table</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>253</TableNumber>
+		<sFileName>CodeType</sFileName>
+		<sTableName>CodeType</sTableName>
+		<sDescription>Code Maintenance Type Table</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>254</TableNumber>
+		<sFileName>CodeMast</sFileName>
+		<sTableName>CodeMast</sTableName>
+		<sDescription>Code Maintenance Code Table</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>263</TableNumber>
+		<sFileName>WebAppSession</sFileName>
+		<sTableName>WebAppSession</sTableName>
+		<sDescription>Web Application Session Table</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>264</TableNumber>
+		<sFileName>WebAppUser</sFileName>
+		<sTableName>WebAppUser</sTableName>
+		<sDescription>Web Application User Table</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
+		<TableNumber>265</TableNumber>
+		<sFileName>WebAppServerProps</sFileName>
+		<sTableName>WebAppServerProps</sTableName>
+		<sDescription>WebAppServerProps</sDescription>
+	</FilelistEntry>
+</ArrayOfFilelistEntry>
