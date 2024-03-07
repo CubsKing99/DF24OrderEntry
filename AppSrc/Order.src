@@ -456,21 +456,21 @@ Object oMain is a Panel
         Use SalesPerson.vw
         Use Vendor.vw
         
-        Use Basic\CustomerListBR.rv
-        Use WinPrint\CustomerListWP.rv
-        Use WinPrint\ItemsPerOrderWP.rv
-        Use WinPrint\OrdersWP.rv
-        Use WinPrint\OrdersByCustomerWP.rv
+//        Use Basic\CustomerListBR.rv
+//        Use WinPrint\CustomerListWP.rv
+//        Use WinPrint\ItemsPerOrderWP.rv
+//        Use WinPrint\OrdersWP.rv
+//        Use WinPrint\OrdersByCustomerWP.rv
         
         On_Key Key_Ctrl+Key_1 Send Activate_oCustomerView
         On_Key Key_Ctrl+Key_2 Send Activate_oInventoryView
         On_Key Key_Ctrl+Key_3 Send Activate_oOrderEntryView
         On_Key Key_Ctrl+Key_4 Send Activate_oSalesPersonView
         On_Key Key_Ctrl+Key_5 Send Activate_oVendorView
-        On_Key Key_Ctrl+Key_6 Send Activate_oCustomerListWP
-        On_Key Key_Ctrl+Key_7 Send Activate_oItemsPerOrderWP
-        On_Key Key_Ctrl+Key_8 Send Activate_oOrdersByCustomerWP
-        On_Key Key_Ctrl+Key_9 Send Activate_oOrdersWP
+//        On_Key Key_Ctrl+Key_6 Send Activate_oCustomerListWP
+//        On_Key Key_Ctrl+Key_7 Send Activate_oItemsPerOrderWP
+//        On_Key Key_Ctrl+Key_8 Send Activate_oOrdersByCustomerWP
+//        On_Key Key_Ctrl+Key_9 Send Activate_oOrdersWP
         
         Use StdAbout.pkg
         Use DemoSuggestionForm.vw
