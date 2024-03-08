@@ -7,6 +7,12 @@
 		<sDescription/>
 	</FilelistEntry>
 	<FilelistEntry>
+		<TableNumber>1</TableNumber>
+		<sFileName>APITokens</sFileName>
+		<sTableName>APITokens</sTableName>
+		<sDescription>API Tokens</sDescription>
+	</FilelistEntry>
+	<FilelistEntry>
 		<TableNumber>20</TableNumber>
 		<sFileName>OrderSystem</sFileName>
 		<sTableName>OrderSystem</sTableName>
