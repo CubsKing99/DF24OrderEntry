@@ -1,0 +1,71 @@
+﻿Use DataDict.pkg
+
+Open APITokens
+
+Class cAPITokens_DataDictionary is a DataDictionary
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to APITokens.File_Number
+
+        Set Foreign_Field_Option DD_KEYFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+
+        Set Field_Label_Long Field APITokens.API to "API"
+        Set Field_Label_Short Field APITokens.API to "API"
+
+        Set Field_Label_Long Field APITokens.Token to "Token"
+        Set Field_Label_Short Field APITokens.Token to "Token"
+
+        Set Field_Label_Long Field APITokens.ExpirationDate to "Expiration Date"
+        Set Field_Label_Short Field APITokens.ExpirationDate to "Exp Dt"
+
+        Set Field_Label_Long Field APITokens.ExpirationTime to "Expiration Time"
+        Set Field_Label_Short Field APITokens.ExpirationTime to "Exp Tm"
+    End_Procedure
+
+    {MethodType = Method}
+    Function ExpirationDateTime Returns DateTime
+        DateTime dtExpiration
+        String  sTime
+        Integer iHour iMin
+
+        Get Field_Current_Value Field APITokens.ExpirationDate  to dtExpiration
+        Get Field_Current_Value Field APITokens.ExpirationTime  to sTime
+
+        //Time is stored as HHMM.  We need to convert that back.
+        Move (Left(sTime, 2))   to iHour
+        Move (Right(sTime, 2))  to iMin
+
+        Move (DateSetHour(dtExpiration, iHour))     to dtExpiration
+        Move (DateSetMinute(dtExpiration, iMin))    to dtExpiration
+
+        Function_Return dtExpiration
+    End_Function
+
+    {MethodType = Property}
+    Procedure ExpirationDateTime DateTime dtExpiration
+        String  sTime
+
+        Set Field_Changed_Value Field APITokens.ExpirationDate  to dtExpiration
+        Get FormatTime dtExpiration to sTime
+        Set Field_Changed_Value Field APITokens.ExpirationTime  to sTime
+    End_Procedure
+
+    Function FormatTime DateTime dtToConvert Returns String
+        String  sReturn
+        Handle  hMasker
+
+        Move (Create(Self, RefClass(DfBaseForm)))   to hMasker
+        Set Form_Mask of hMasker to "HHmm"
+        Set Form_DataType of hMasker to Mask_Datetime_Window
+        Set Value of hMasker to dtToConvert
+        Get Masked_Value of hMasker  to sReturn // return value will be ansi
+        Send Destroy    of hMasker
+
+        Function_Return sReturn
+    End_Function
+
+End_Class

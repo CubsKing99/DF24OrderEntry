@@ -1,0 +1,6 @@
+#REPLACE FILE1 APITokens
+#REPLACE APITokens.Recnum |FN1,0
+#REPLACE APITokens.API |FS1,1
+#REPLACE APITokens.Token |FS1,2
+#REPLACE APITokens.ExpirationDate |FD1,3
+#REPLACE APITokens.ExpirationTime |FS1,4

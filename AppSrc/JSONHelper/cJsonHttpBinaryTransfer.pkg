@@ -1,0 +1,35 @@
+﻿Use cJsonHttpTransfer.pkg
+
+//External_Function WinAPI_InternetSetOption "InternetSetOptionA" WinInet.Dll Handle hInternet DWord dwOption Pointer lpBuffer DWord dwBufferLength Returns Boolean
+Define INTERNET_OPTION_HTTP_DECODING    for 65
+
+Class cJsonHttpBinaryTransfer is a cJsonHttpTransfer
+    
+    Procedure Construct_Object
+        Integer iEnable
+        Boolean bOk
+        Handle  hInternet
+
+        Forward Send Construct_Object
+
+        Property String psData  // for compatibility with other httpTransfer classes
+
+        //2024-02-12 MRM Added to allow automatic gzip decoding.
+        Move 1 to iEnable // Or 0 if you want to disable it
+        Get RootHandle to hInternet
+        Move (WinAPI_InternetSetOption(hInternet, INTERNET_OPTION_HTTP_DECODING, AddressOf(iEnable), SizeOfType(Integer))) to bOk
+    End_Procedure
+
+    // this handles big binary files and doesn't terminate on NULL characters
+    Function HttpVerbJsonUCharBinary String sHost String sFilePath UChar[] ucJson String sVerb Returns UChar[]
+        Integer iLen
+        Address aDataReceived
+        UChar[] ucJsonReceived
+        Boolean bOk
+
+        Get HttpVerbJsonUChar sHost sFilePath ucJson sVerb  to ucJsonReceived
+
+        Function_Return ucJsonReceived
+    End_Function
+
+End_Class

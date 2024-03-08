@@ -1,0 +1,35 @@
+﻿Use cIniFile.pkg
+Use Batchdd.pkg
+Use Dferror.pkg
+Use cApplication.pkg
+
+Struct FedExAccountInfo
+    String  sClientID
+    String  sClientPass
+    String  sAccountNum
+End_Struct
+
+Object bpFedExAccountInfo is a BusinessProcess
+    Function LoadFedExAccountInfo Returns FedExAccountInfo
+        Handle  hINI
+        String  sFileName
+        Boolean bExists
+        FedExAccountInfo tAcctInfo
+
+        Get Create (RefClass(cIniFile)) to hINI
+        Move ((GetApplicationPath(oApplication(Self))) - "\FedEx.ini") to sFileName
+
+        File_Exist sFileName bExists
+        If (not(bExists)) Begin
+            Send UserError "FedEx Account info is missing and cannot be loaded." "No FedEx Info"
+            Function_Return
+        End
+
+        Set psFileName  of hIni to sFileName
+        Move (ReadString(hIni, "Connection", "ClientID", ""))   to tAcctInfo.sClientID
+        Move (ReadString(hIni, "Connection", "ClientPass", "")) to tAcctInfo.sClientPass
+        Move (ReadString(hIni, "Connection", "AccountNum", "")) to tAcctInfo.sAccountNum
+
+        Function_Return tAcctInfo        
+    End_Function
+End_Object

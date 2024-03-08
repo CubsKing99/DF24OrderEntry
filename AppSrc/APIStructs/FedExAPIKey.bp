@@ -1,0 +1,70 @@
+﻿Use Batchdd.pkg
+Use APIStructs\FedExAPIKey.pkg
+
+Use APIStructs\APITokens.bp
+Use APITokens.dd
+
+Object bpFedExAPIKey is a BusinessProcess
+    Object oAPITokens_DD is a cAPITokens_DataDictionary
+    End_Object
+
+    Object oFedExAPIKey is a cFedExAPIKey
+#IFDEF Is$WebApp
+#ELSE
+        Set phHelper    to oWebServiceHelper
+//        If (not(ProductionEnvironment(oSysParm(Self)))) Begin
+            Set pbDisplay of oWebServiceHelper to True
+//        End
+#ENDIF
+    End_Object
+
+    Set Main_DD to oAPITokens_DD
+
+    //2024-02-06 MRM We do NOT need different API keys per account.  They're all under 1 project on
+    //  FedEx's website, so they can all use the same API key.
+    Function FedExAPIToken String sClientID String sClientPass Returns String
+        String  sToken sErrorMessage sAPI
+        Boolean bValid
+        stFedExAPIKeyResponse tResponse
+        Integer iError
+        DateTime dtGeneration dtExpire
+
+        //We need different tokens for each account, so we'll need to include that in the "API Name"
+        Move "FedExAccount" to sAPI
+//        Append sAPI sAccountNum
+
+        Get TokenIsValid    of bpAPITokens sAPI to bValid
+        If bValid Begin
+            Get CurrentToken of bpAPITokens sAPI    to sToken
+        End
+        Else Begin
+            //The token has expired, so update it.
+            Get FedExAPIKeyAuthorize    of oFedExAPIKey sClientID sClientPass  to tResponse
+
+            If (tResponse.access_token <> "") Begin
+                Move tResponse.access_token  to sToken
+
+                //Figure out the expiration time
+                Get pdtGeneration   of oFedExAPIKey   to dtGeneration
+                Get DateAddSecond dtGeneration tResponse.expires_in to dtExpire
+
+                Send UpdateToken    of bpAPITokens sAPI sToken dtExpire
+            End
+            Else If (SizeOfArray(tResponse.errors) > 0) Begin
+                Move "Could not authorize FedEx API Key."   to sErrorMessage
+                If (SizeOfArray(tResponse.errors) > 0) Begin
+                    Append sErrorMessage C_CRLF 
+
+                    For iError from 0 to (SizeOfArray(tResponse.errors) - 1)
+                        Append sErrorMessage C_CRLF "Code " tResponse.errors[iError].code ":  " tResponse.errors[iError].message
+                    Loop
+                End
+
+                Send UserError sErrorMessage  "Invalid API Key"
+            End
+        End
+
+        Function_Return sToken
+    End_Function
+
+End_Object

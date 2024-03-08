@@ -1,0 +1,776 @@
+﻿Use cJsonObject.pkg
+Use JSONHelper\cJsonHttpBinaryTransfer.pkg
+Use SoapConstants.pkg
+Use vWin32fh\vwin32fh.pkg
+
+#IFNDEF C_CRLF
+Define C_CRLF   for (Character(13) + Character(10))
+#ENDIF
+
+Register_Procedure DisplayJSON Handle hReader String sPath String sAction String sRequest String sResponse
+
+{OverrideProperty = piBufferSize InitialValue = 4096}
+{OverrideProperty = pbClearHeaders InitialValue = False}
+{OverrideProperty = psContentTypeSent InitialValue = "application/json"}
+{OverrideProperty = psContentTypeExpected InitialValue = "application/json"}
+Class cWSJsonHttpBinaryTransfer is a cJsonHttpBinaryTransfer
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        {DesignTime = False}
+        Property String psReceivedData ""
+
+        Set piBufferSize    to 4096
+        Set pbClearHeaders  to False
+        Set psContentTypeSent       of oHttpReader to 'application/json'
+        Set psContentTypeExpected   of oHttpReader to 'application/json'
+    End_Procedure
+
+    Procedure OnDataReceivedUC String sContentType UChar[] ucData
+        UChar[] ucBuffer
+        Integer iDataLen
+        Boolean bValid
+        Handle  hJSON
+
+        Forward Send OnDataReceivedUC sContentType ucData
+
+        //Check if the data is a valid JSON struct
+        Get Create (RefClass(cJsonObject)) to hJSON
+        Send InitializeJsonType of hJSON jsonTypeObject
+
+        Get pucDataReceived to ucBuffer
+        Get ParseUtf8   of hJSON ucBuffer  to bValid
+
+        If bValid Begin
+            //If we've reached the end, call the "Process the data" method
+            Send HttpReaderDataReceived sContentType ucData
+            //Clear the buffer for the next transfer
+//            Set pucReceivedData  to ""
+        End
+//        Else Begin
+//            //Save the data for the next chunk 
+//            Set psReceivedData  to sReceivedData
+//        End
+
+//
+//
+//        Move (SizeOfArray(ucData)) to iDataLen
+//        
+//        If (iDataLen > 0) Begin
+//            Get pucDataReceived to ucBuffer
+//            If (SizeOfArray(ucBuffer) > 0) Begin
+//                Set pucDataReceived to (AppendArray(ucBuffer, ucData))
+//            End
+//            Else Begin
+//                Set psContentTypeReceived to sContentType
+//                
+//                If (iDataLen > 3 and ucData[0]=C_BOM1 and ucData[1]=C_BOM2 and ucData[2]=C_BOM3) Begin
+//                    Set pucDataReceived to (CopyArray(ucData, 3, iDataLen - 1))
+//                End
+//                Else Begin
+//                    Set pucDataReceived to ucData
+//                End
+//            End
+//        End
+    End_Procedure
+
+//    Procedure OnDataReceived String sContentType String sData
+//        String  sReceivedData
+//        Integer iBufferSize
+//        Handle  hJSON
+//        Boolean bValid
+//
+//        Forward Send OnDataReceived sContentType sData
+//
+//        Get piBufferSize    to iBufferSize
+//
+//        Get psReceivedData  to sReceivedData
+//        Append sReceivedData sData
+//
+//        //Check if the data is a valid JSON struct
+//        Get Create (RefClass(cJsonObject)) to hJSON
+//        Send InitializeJsonType of hJSON jsonTypeObject
+//
+//        Get ParseString of hJSON sReceivedData  to bValid
+//
+//        If bValid Begin
+//            //If we've reached the end, call the "Process the data" method
+//            Send HttpReaderDataReceived sContentType sReceivedData
+//            //Clear the buffer for the next transfer
+//            Set psReceivedData  to ""
+//        End
+//        Else Begin
+//            //Save the data for the next chunk 
+//            Set psReceivedData  to sReceivedData
+//        End
+//    End_Procedure
+
+    { MethodType = Event }
+    Procedure HttpReaderDataReceived String sContentType UChar[] ucData
+        Forward Send HttpReaderDataReceived sContentType ucData
+    End_Procedure
+End_Class
+
+Class cWSJson is a cObject
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        { Category = "Logging" DesignTime = False }
+        Property String psLogPath
+        { Category = "Logging" }
+        Property String psLogFileName
+        { Category = "Data" }
+        Property String psResponseJSON
+        { Category = "Logging" DesignTime = False }
+        Property String psLastError
+
+        { Category = "Server" }
+        Property String psRemoteHost
+        { Category = "Server" }
+        Property Integer piRemotePort
+        { Category = "Server" }
+        Property Boolean pbSecure False
+
+        { Category = "Behvior" InitialValue = True }
+        Property Boolean pbRemoveNullMembers True
+
+        { Category = "Server" DesignTime = False InitialValue = True }
+        Property Boolean pbHeaderSetup True
+
+        //This is helpful in testing and debugging
+        { DesignTime=False }
+        Property Handle phHelper 0 //Shows the JSON and service information
+
+        Object oHttpReader is a cWSJsonHttpBinaryTransfer
+        End_Object
+    End_Procedure
+
+    { MethodType = Property }
+    Function LogPath Returns String
+        String  sLogPath
+        Boolean bExists
+        Integer iResult
+
+        Get psLogPath   to sLogPath
+        If (sLogPath = "") Begin
+            Get psProgramPath of (phoWorkspace(ghoApplication))     to sLogPath
+            Move (Replace("\Programs", sLogPath, "\Logs\JSON\"))    to sLogPath
+            Set psLogPath to sLogPath
+        End
+
+        //Make sure the folder exists
+        Get vFolderExists sLogPath  to bExists
+        If (not(bExists)) Begin
+            Get vshCreateDirectoryEX sLogPath   to iResult
+        End
+
+        Function_Return sLogPath
+    End_Function
+
+    { MethodType = Method }
+    Function GetJSON Returns Boolean
+        String  sRemoteHost sErr sJson sPath
+        Handle  hResponse hHelper
+        Boolean bOk
+        Integer iRetVal iCode
+
+        Get phHelper    to hHelper
+
+        //Clear the last error message
+        Set psLastError to ""
+
+        Send SetupHeader
+        //If there was an error setting up the header, don't bother trying to get the JSON
+        Get pbHeaderSetup   to bOk
+        If (not(bOk)) Begin
+            Function_Return False
+        End
+
+        Get psRemoteHost    to sRemoteHost
+
+        Get SetupPathAndParameters  to sPath
+
+        //Perfrom the HTTP GET and get back the JSON response
+        Get HttpGetJson             of oHttpReader sRemoteHost sPath (&bOk) to hResponse
+
+        If bOk Begin
+            Get peJsonTransferStatus of oHttpReader to iRetVal
+        End
+        Else Begin
+            Move jtsError   to iRetVal
+        End
+
+        //If something went wrong, log the error and return
+        If (iRetVal <> jtsOk) Begin
+            Get LastErrorCode   of oHttpReader  to iCode
+            Get TransferErrorDescription of oHttpReader to sErr
+            If (Trim(sErr) > '') Begin
+                Move (SFormat("Error code %1 - %2", iCode, sErr))   to sErr
+            End
+            Else Begin
+                Move (SFormat("Error code %1", iCode))  to sErr
+            End
+
+            Send LogError sPath "" sErr
+            Set psLastError to sErr
+
+            If (hHelper > 0) Begin
+                Send DisplayJSON    of hHelper oHttpReader sPath "GET" "No request JSON" sErr True
+            End
+
+            Move False  to bOk
+        End
+        Else Begin
+            //Log the response
+            Send LogJSONObject hResponse "Response"
+
+            //Store the response as a string.
+            Set peWhiteSpace    of hResponse    to jpWhitespace_Pretty
+            Get Stringify       of hResponse    to sJson
+            Set psResponseJSON  to sJson
+
+            If (pbRemoveNullMembers(Self)) Begin
+                Set pbRequireAllMembers of hResponse    to False
+                Send RemoveNullMembers hResponse
+            End
+
+            If (hHelper > 0) Begin
+                Send DisplayJSON    of hHelper oHttpReader sPath "GET" "No request JSON" sJson True
+            End
+            Else Begin
+                //Log the response
+                Send LogJSONObject hResponse "Response"
+            End
+
+            //Tell the instance to parse the response
+            Get ParseJSONResponse hResponse to bOk
+        End
+
+        If (hResponse > 0) Begin
+            Send Destroy of hResponse
+        End
+
+        Function_Return bOk
+    End_Function
+
+    { MethodType = Method }
+    Function PostJSON Returns Boolean
+        Boolean bOK
+
+        Get TransferJSONWithRequestAndResponse "POST"   to bOK
+
+        Function_Return bOK
+    End_Function
+
+    { MethodType = Method }
+    Function PutJSON Returns Boolean
+        Boolean bOK
+
+        Get TransferJSONWithRequestAndResponse "PUT"    to bOK
+
+        Function_Return bOK
+    End_Function
+
+    { MethodType = Method }
+    Function DeleteJSON Returns Boolean
+        Boolean bOK
+
+        Get TransferJSONWithRequestAndResponse "DELETE"    to bOK
+
+        Function_Return bOK
+    End_Function
+
+    {Visibility = Private}
+    Function TransferJSONWithRequestAndResponse String sVerb Returns Boolean
+        String  sRemoteHost sErr sRequest sResponse sPath
+        Handle  hResponse hRequest hHelper
+        Boolean bOk bParsed
+        Integer iRetVal iCode iCount iResponseCode
+        UChar[] ucRequest ucResponse
+
+        Get phHelper    to hHelper
+
+        //Clear the last error message
+        Set psLastError to ""
+
+        Send SetupHeader
+        //If there was an error setting up the header, don't bother trying to send the JSON
+        Get pbHeaderSetup   to bOk
+        If (not(bOk)) Begin
+            Function_Return False
+        End
+
+        Get psRemoteHost    to sRemoteHost
+
+        Get SetupPathAndParameters  to sPath
+
+        //Tell the instance to fill out the JSON to be sent.
+        Get FillJSONRequest to hRequest
+
+        If (hHelper > 0) Begin
+            Set peWhiteSpace    of hRequest to jpWhitespace_Pretty
+            Get Stringify       of hRequest to sRequest
+        End
+        Else Begin
+            //If we're not showing the helper screen, save the Request
+            Get MemberCount of hRequest to iCount
+            If (iCount > 0) Begin
+                Send LogJSONObject hRequest "Request"
+            End
+        End
+
+        //Perfrom the HTTP action and get back the JSON response
+        //2024-02-12 MRM (Tk#28964) Changed so we can parse gzip-ed responses.
+        Get StringifyUTF8 of hRequest   to ucRequest
+
+        Get HttpVerbJsonUCharBinary of oHttpReader sRemoteHost sPath ucRequest sVerb    to ucResponse
+//        If (sVerb = "POST") Begin
+//            Get HttpPostJson    of oHttpReader sRemoteHost sPath hRequest (&bOk) to hResponse
+//        End
+//        Else If (sVerb = "PUT") Begin
+//            Get HttpPutJson     of oHttpReader sRemoteHost sPath hRequest (&bOk) to hResponse
+//        End
+//        Else If (sVerb = "DELETE") Begin
+//            Get HttpDeleteJson  of oHttpReader sRemoteHost sPath hRequest (&bOk) to hResponse
+//        End
+
+        Get ResponseStatusCode of oHttpReader to iResponseCode
+        If ((iResponseCode >= 200) and (iResponseCode < 300)) Begin     // 200 codes.
+            Get peJsonTransferStatus of oHttpReader to iRetVal
+        End
+        Else Begin
+            Move jtsError   to iRetVal
+        End
+
+        //2024-02-12 MRM (Tk#28964) Do this first if we got valid data, regardless of if it was a logical error response code or not.
+        //Convert the response UChar array to a cJsonObject
+        Get Create (RefClass(cJsonObject)) to hResponse
+        Get ParseUtf8   of hResponse ucResponse to bParsed
+        If bParsed Begin
+            //Tell the instance to parse the response
+            Get ParseJSONResponse hResponse to bOk
+        End
+
+        //If something went wrong, log the error and return
+        If (iRetVal <> jtsOk) Begin
+            Get TransferErrorDescription of oHttpReader to sErr
+            If (Trim(sErr) > '') Begin
+                Move (SFormat("Error code %1 - %2", iResponseCode, sErr))   to sErr
+            End
+            Else Begin
+                Move (SFormat("Error code %1", iResponseCode))  to sErr
+            End
+
+            If bParsed Begin
+                Set peWhiteSpace    of hResponse    to jpWhitespace_Pretty
+                Get Stringify       of hResponse    to sResponse
+                Append sErr C_CRLF C_CRLF sResponse
+            End
+
+            Send LogError sPath "" sErr
+            Set psLastError to sErr
+
+            If (hHelper > 0) Begin
+                Send DisplayJSON    of hHelper oHttpReader sPath sVerb sRequest sErr True
+            End
+
+            Move False  to bOk
+        End
+        Else If (SizeOfArray(ucResponse) = 0) Begin
+            Move "No JSON response was received or parsed." to sErr
+            Send LogError sPath "" sErr
+            Set psLastError to sErr
+
+            Move False  to bOk
+        End
+        Else Begin
+            //Log the response
+            Send LogJSONUChar ucResponse "Response"
+
+            //Store the response as a string.
+            Set peWhiteSpace    of hResponse    to jpWhitespace_Pretty
+            Get Stringify       of hResponse    to sResponse
+            Set psResponseJSON  to sResponse
+
+            If (pbRemoveNullMembers(Self)) Begin
+                Set pbRequireAllMembers of hResponse    to False
+                Send RemoveNullMembers hResponse
+            End
+
+            If (hHelper > 0) Begin
+                Send DisplayJSON    of hHelper oHttpReader sPath sVerb sRequest sResponse True
+            End
+            Else Begin
+                //Log the response
+                Send LogJSONObject hResponse "Response"
+            End
+        End
+
+        If (hResponse > 0) Begin
+            Send Destroy of hResponse
+        End
+
+        Function_Return bOk
+    End_Function
+
+    { MethodType = Method }
+    Procedure SetupHeader
+        Send ClearHeaders of oHttpReader
+
+        Set psRemoteHost of oHttpReader to (psRemoteHost(Self))
+        Set piRemotePort of oHttpReader to (piRemotePort(Self))
+        If (pbSecure(Self)) Begin
+            Set peTransferFlags of oHttpReader to (ifSecure + ifNoCacheWrite)
+        End
+
+        //If there's any additional setup stuff, do it now
+        Send SetupAdditionalHeaderFields
+    End_Procedure
+
+    { MethodType = Event }
+    Procedure SetupAdditionalHeaderFields
+        Integer iDontKnow
+
+        //2024-02-12 MRM (Tk#28964) Added to allow automatic gzip decoding.
+        Get AddHeader   of oHttpReader "Accept-Encoding" "gzip, deflate" to iDontKnow
+    End_Procedure
+
+    { MethodType = Event }
+    Function SetupPathAndParameters Returns String
+        Function_Return ""
+    End_Function
+
+    { MethodType = Event }
+    Function FillJSONRequest Returns Handle
+        Handle  hJSONRequest
+
+        Get Create (RefClass(cJsonObject)) to hJSONRequest
+        Send InitializeJsonType of hJSONRequest jsonTypeObject
+
+        Function_Return hJSONRequest
+    End_Function
+
+    { MethodType = Event }
+    Function ParseJSONResponse Handle hJSONResponse Returns Boolean
+        Function_Return True
+    End_Function
+
+    //2024-02-12 MRM (Tk#28964) Renamed so I can add a version that takes UChar[] because we can't overload a method in DF...
+    Procedure LogJSONObject Handle hJSON String sDirection
+        String  sOutputPath sFileName sDate sJSON sLogFile
+        Integer iCh
+        UChar[] ucJSON
+
+        ConvertToXML xsDateTime (CurrentDateTime()) to sDate
+        Move (Replaces(":", sDate, ".")) to sDate //Change the : in the time so Windows doesn't freak out.
+
+        Get LogPath         to sOutputPath
+        Get psLogFileName   to sLogFile
+
+        Move sOutputPath    to sFileName
+        Append sFileName sDate " - " 
+        If (sLogFile <> "") Begin
+            Append sFileName sLogFile
+        End
+        Else Begin
+            Append sFileName "JSON"
+        End
+        Append sFileName " " sDirection ".json"
+
+        Get StringifyUtf8 of hJSON to ucJSON
+//2024-02-12 MRM This isn't being used, so don't bother to convert it to string unless you're debugging...
+//        Get Stringify     of hJSON to sJSON
+
+        Move (Seq_New_Channel()) to iCh
+        Append_Output channel iCh sFileName
+            Writeln channel iCh ucJSON
+        Close_Output channel iCh
+        Send Seq_Release_Channel iCh
+    End_Procedure
+
+    //2024-02-12 MRM (Tk#28964) Add a version that takes UChar[].
+    Procedure LogJSONUChar UChar[] ucJSON String sDirection
+        String  sOutputPath sFileName sDate sJSON sLogFile
+        Integer iCh
+
+        ConvertToXML xsDateTime (CurrentDateTime()) to sDate
+        Move (Replaces(":", sDate, ".")) to sDate //Change the : in the time so Windows doesn't freak out.
+
+        Get LogPath         to sOutputPath
+        Get psLogFileName   to sLogFile
+
+        Move sOutputPath    to sFileName
+        Append sFileName sDate " - " 
+        If (sLogFile <> "") Begin
+            Append sFileName sLogFile
+        End
+        Else Begin
+            Append sFileName "JSON"
+        End
+        Append sFileName " " sDirection ".json"
+
+//2024-02-12 MRM This isn't being used, so don't bother to convert it to string unless you're debugging...
+//        Move (UCharArrayToString(ucJSON, (SizeOfArray(ucJSON))))    to sJSON
+
+        Move (Seq_New_Channel()) to iCh
+        Append_Output channel iCh sFileName
+            Writeln channel iCh ucJSON
+        Close_Output channel iCh
+        Send Seq_Release_Channel iCh
+    End_Procedure
+
+    { MethodType = Method }
+    Procedure LogError String sURL String RequestBody String sMessage
+        String  sOutputPath sFileName sDate sDate2 sComputerName sErrorMessage sLogFile
+        DateTime dtNow
+        Integer iCh
+
+        Move (CurrentDateTime()) to dtNow
+        ConvertToXML xsDateTime dtNow to sDate2
+        Move (Replaces(":", sDate2, ".")) to sDate2 //Change the : in the time so Windows doesn't freak out.
+        Get_Environment "COMPUTERNAME" to sComputerName
+
+        Move (Left(sDate2, 10)) to sDate  // simple date without time
+
+        Get LogPath to sOutputPath
+        Get psLogFileName   to sLogFile
+
+        Move sOutputPath to sFileName
+        Append sFileName sDate "-"
+        If (sLogFile <> "") Begin
+            Append sFileName sLogFile
+        End
+        Else Begin
+            Append sFileName "JSON"
+        End
+        Append sFileName "Error.log"
+
+        Append sErrorMessage sDate2 " " sComputerName " " sMessage C_CRLF sURL C_CRLF RequestBody
+
+        Move (Seq_New_Channel()) to iCh
+        Append_Output channel iCh sFileName
+            Writeln channel iCh sErrorMessage
+        Close_Output channel iCh
+        Send Seq_Release_Channel iCh
+    End_Procedure
+
+    //Mike Peat's version of Harm's procedure, just for nulls.
+    //Taken from the DF wiki: https://dataflex.wiki/index.php/JSON_and_Nullable_elements
+    { MethodType = Method }
+    Procedure RemoveNullMembers Handle hJSON
+        Integer iTo iMember iType
+        Handle hMember
+        String sMemberName
+        Boolean bRemove
+
+        Get MemberCount of hJSON to iTo
+        Decrement iTo
+
+        For iMember from 0 to iTo
+            Move False to bRemove
+            Get MemberByIndex of hJSON iMember to hMember
+            Get JsonType of hMember to iType
+
+            If (iType = jsonTypeNull) Begin
+                Move True to bRemove
+            End
+            Else If (iType = jsonTypeObject or iType = jsonTypeArray) Begin
+                Send RemoveNullMembers hMember
+            End
+
+            If bRemove Begin
+                If (IsOfJsonType(hJSON, jsonTypeObject)) Begin
+                    Get MemberNameByIndex of hJSON iMember to sMemberName
+                    Send RemoveMember of hJSON sMemberName
+                    Decrement iMember
+                    Decrement iTo
+                End
+                Else If (IsOfJsonType(hJSON, jsonTypeArray)) Begin
+                    Send RemoveMember of hJSON iMember
+                    Decrement iMember
+                    Decrement iTo
+                End
+            End
+
+            Send Destroy of hMember
+        Loop
+    End_Procedure
+
+    //  Recursive function going over JSON objects removing all empty strings, 0 and NULL values of objects (not from arrays).
+    //
+    //  Params:
+    //      hJSON       Handle of the JSON object to process.
+    //      bEmptyString    If true empty string values will be removed.
+    //      bZeroNumber     If true all numeric 0 values will be removed.
+    //      bNull           If true all NULL values will be removed.
+    //
+    //Taken from the DF wiki: https://dataflex.wiki/index.php/JSON_and_Nullable_elements
+    { MethodType = Method }
+    Procedure RemoveEmptyMembers Handle hJSON Boolean bEmptyString Boolean bZeroNumber Boolean bNull
+        Integer iTo iMember iType iMembers
+        Handle hMember
+        String sMemberName sValue
+        Boolean bRemove bJSONObject
+
+        Get MemberCount of hJSON to iTo
+        For iMember from 0 to (iTo - 1)
+            Move False to bRemove
+
+            Get MemberByIndex of hJSON iMember to hMember
+            Get JsonType    of hMember  to iType
+            Get JsonValue   of hMember  to sValue
+
+            Case Begin
+                Case (iType = jsonTypeString)
+                    If (bEmptyString) Begin
+                        Move (JsonValue(hMember) = "") to bRemove
+                    End
+                    Case Break
+                Case (iType = jsonTypeInteger)
+                    If (bZeroNumber) Begin
+                        Move (JsonValue(hMember) = 0) to bRemove
+                    End
+                    Case Break
+                Case (iType = jsonTypeNull) 
+                    Move bNull to bRemove
+                    Case Break
+                Case (iType = jsonTypeObject or iType = jsonTypeArray) Begin
+                    Get MemberCount of hMember to iMembers
+                    If (iMembers > 0) Begin
+                        //Remove the empty children
+                        Send RemoveEmptyMembers hMember bEmptyString bZeroNumber bNull
+                        Get MemberCount of hMember to iMembers //Get the new member count
+                    End
+
+                    //If there's no children left for this member, remove the object/array, too
+                    Move (iMembers = 0) to bRemove
+
+                    Case Break
+                End
+            Case End
+
+            If bRemove Begin
+                If (IsOfJsonType(hJSON, jsonTypeObject)) Begin
+                    //If the parent is an object, we can remove this item
+                    Get MemberNameByIndex of hJSON iMember to sMemberName
+                    Send RemoveMember   of hJSON sMemberName
+                    Decrement iMember
+                    Decrement iTo
+                End
+                Else If (IsOfJsonType(hJSON, jsonTypeArray)) Begin
+                    //If the parent is an array, we can remove the item.
+                    Send RemoveMember   of hJSON iMember
+                    Decrement iMember
+                    Decrement iTo
+                End
+            End
+
+            Send Destroy of hMember
+        Loop
+    End_Procedure
+
+    { MethodType = Event }
+    Procedure HttpReaderDataReceived String sContentType UChar[] ucData
+    End_Procedure
+End_Class
+
+Class cWSJsonPostString is a cWSJson
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        {DesignTime = False}
+        Property DateTime pdtGeneration
+    End_Procedure
+
+    { MethodType = Method }
+    //This type of method is used for a lot of OAuth2 token calls, but it's not really a POST.
+    //  It's really just a URL-encoded text string, so we can't use the normal PostJSON function...
+    Function PostStringReturnJSON Returns Boolean
+        String  sRemoteHost sErr sJson sPath sBody
+        Handle  hResponse hRequest
+        Boolean bOk
+        Integer iRetVal iCode
+        DateTime    dtGeneration
+
+        //Clear the last error message
+        Set psLastError to ""
+
+        Send SetupHeader
+        //If there was an error setting up the header, don't bother trying to post the JSON
+        Get pbHeaderSetup   to bOk
+        If (not(bOk)) Begin
+            Function_Return False
+        End
+
+        Get SetupPathAndParameters  to sPath
+
+        Set psContentTypeSent       of oHttpReader to 'application/x-www-form-urlencoded'
+        Set psContentTypeExpected   of oHttpReader to 'application/json'
+
+        //Create the text string to be sent
+        Get SetupPostString to sBody
+
+        //Save the time we did this so we know when the token has expired
+        Move (CurrentDateTime())    to dtGeneration
+        Set pdtGeneration   to dtGeneration
+
+        //Perfrom the HTTP POST and get back the JSON response
+        Get HttpPostRequest of oHttpReader sPath sBody False  to bOk
+
+        If bOk Begin
+            Get peJsonTransferStatus of oHttpReader to iRetVal
+        End
+        Else Begin
+            Move jtsError   to iRetVal
+        End
+
+        //If something went wrong, log the error and return
+        If (iRetVal <> jtsOk) Begin
+            Get LastErrorCode   of oHttpReader  to iCode
+            Get TransferErrorDescription of oHttpReader to sErr
+            If (Trim(sErr) > '') Begin
+                Move (SFormat("Error code %1 - %2", iCode, sErr))   to sErr
+            End
+            Else Begin
+                Move (SFormat("Error code %1", iCode))  to sErr
+            End
+
+            Send LogError sPath "" sErr
+            Set psLastError to sErr
+
+            Move False  to bOk
+        End
+        Else Begin
+            Get WaitForPostStringJSONResponse to bOk
+        End
+
+        Function_Return bOk
+    End_Function
+
+    { MethodType = Event }
+    Function SetupPostString Returns String
+        Function_Return ""
+    End_Function
+
+    { MethodType = Event }
+    Function WaitForPostStringJSONResponse Returns Boolean
+        Function_Return False
+    End_Function
+
+    { MethodType = Event }
+    Procedure HttpReaderDataReceived String sContentType UChar[] ucData
+        Handle  hJSON
+        Boolean bParsed
+
+        Forward Send HttpReaderDataReceived sContentType ucData
+
+        Get Create (RefClass(cJsonObject)) to hJSON
+        Send InitializeJsonType of hJSON jsonTypeObject
+        Get ParseUtf8   of hJSON ucData to bParsed
+        If bParsed Begin
+            Get ParseJSONResponse hJSON to bParsed
+        End
+    End_Procedure
+
+End_Class

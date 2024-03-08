@@ -1,5 +1,17 @@
+<?xml version="1.0"?>
 <DataDictionaryList xmlns="http://www.dataaccess.com/VisualDataFlex/2008/DataDictionaryList/">
 	<Tables>
+		<Table>
+			<tableNumber>1</tableNumber>
+			<tableName>APITokens</tableName>
+			<DDClasses>
+				<DDClass>
+					<className>cAPITokens_DataDictionary</className>
+					<classFile>APITokens.dd</classFile>
+					<preferred>true</preferred>
+				</DDClass>
+			</DDClasses>
+		</Table>
 		<Table>
 			<tableNumber>21</tableNumber>
 			<tableName>Vendor</tableName>

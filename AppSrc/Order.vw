@@ -29,7 +29,6 @@ Object oOrderEntryView is a dbView
     Set Location to 2 3
     Set Size to 178 383
     Set piMinSize to 178 383
-    Set pbAutoActivate to True
 
     Object oVendorDataDictionary is a cVendorDataDictionary
     End_Object

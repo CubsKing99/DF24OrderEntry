@@ -1,0 +1,112 @@
+﻿Use Windows.pkg
+Use cJsonObject.pkg
+Use JSONHelper\cJsonHttpBinaryTransfer.pkg
+Use JSONHelper\cWSJson.pkg
+Use WinUuid.pkg
+
+Use APIStructs\FedExAPICommon\FedExResponseError.pkg
+Use APIStructs\FedExAPICommon\FedExResponseAlerts.pkg
+
+Use APIStructs\FedExAPIKey.bp
+
+Class cFedExAPI is a cWSJson
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psLogFileName to "FedExAPICommon"
+//            Set psRemoteHost to "apis.fedex.com"
+        Set psRemoteHost to "apis-sandbox.fedex.com"
+        Set piRemotePort to rpHttpSSL
+        Set pbSecure to True
+
+        Property String psClientID ""
+        Property String psClientPass ""
+        Property String psAccountNum ""
+
+        //2023-10-18 MRM Test to see if this clears up the error 406
+        Set psAcceptTypes of oHttpReader to '*/*'
+    End_Procedure
+
+    //The request looks something like this:
+    //  https://apis-sandbox.fedex.com/ship/v1/shipments
+
+    Procedure SetupAdditionalHeaderFields
+        Integer iDontKnow
+        String  sID sToken sAuth
+        stFedExAPIKeyResponse tAPIKeyResponse
+
+        Forward Send SetupAdditionalHeaderFields
+
+        //Get the current token from SysParm, if there's one that's valid
+        //2024-02-06 MRM We do NOT need different API keys per account.  They're all under 1 project on
+        //  FedEx's website, so they can all use the same API key.
+//        Get FedExAPIToken   of bpFedExAPIKey (psClientID(Self)) (psClientPass(Self)) (psAccountNum(Self))   to sToken
+        Get FedExAPIToken   of bpFedExAPIKey (psClientID(Self)) (psClientPass(Self))    to sToken
+        If (sToken = "") Begin
+            Set pbHeaderSetup   to False
+            Procedure_Return
+        End
+
+        Move "Bearer "  to sAuth
+        Append sAuth sToken
+        Get AddHeader   of oHttpReader "Authorization" sAuth to iDontKnow
+        Get AddHeader   of oHttpReader "X-locale" "en_US" to iDontKnow
+//ToDo This probably isn't necessary...
+//        Get AddHeader   of oHttpReader "Content-Type" "application/json" to iDontKnow
+
+        Move (RandomHexUUID())  to sID
+        Move (Replaces("-", sID, "")) to sID
+        Get AddHeader   of oHttpReader "x-customer-transaction-id" sID  to iDontKnow
+
+        Set pbHeaderSetup   to True
+    End_Procedure
+
+    Function CreateFedExAPIErrorString stFedExResponseError[] atErrors Returns String
+        String  sTmp sMessage sCode
+        Integer iError iSize
+
+        Move "" to sTmp
+        Move (SizeOfArray(atErrors)) to iSize
+        For iError from 0 to (iSize - 1)
+            Move atErrors[iError].message   to sMessage
+            Move atErrors[iError].code      to sCode
+
+            If (sTmp <> "") Begin
+                Append sTmp C_CRLF
+            End
+
+            If ((sMessage <> "") or (sCode <> "")) Begin
+                Append sTmp sCode ' - '
+                Append sTmp sMessage
+            End
+        Loop
+
+        Function_Return sTmp
+    End_Function
+
+    Function CreateFedExAPIAlertString stFedExResponseAlerts[] tAlerts Returns String
+        String  sTmp sMessage sCode sAlertType
+        Integer iAlert iSize
+
+        Move "" to sTmp
+        Move (SizeOfArray(tAlerts)) to iSize
+        For iAlert from 0 to (iSize - 1)
+            Move tAlerts[iAlert].message    to sMessage
+            Move tAlerts[iAlert].code       to sCode
+            Move tAlerts[iAlert].alertType  to sAlertType
+
+            If (sTmp <> "") Begin
+                Append sTmp C_CRLF
+            End
+
+            If ((sMessage <> "") or (sCode <> "")) Begin
+                Append sTmp sAlertType ' - '
+                Append sTmp sCode ' - '
+                Append sTmp sMessage
+            End
+        Loop
+
+        Function_Return sTmp
+    End_Function
+End_Class

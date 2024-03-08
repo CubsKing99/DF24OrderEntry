@@ -1,0 +1,64 @@
+﻿Use Batchdd.pkg
+
+Use APITokens.dd
+
+Object bpAPITokens is a BusinessProcess
+
+    Object oAPITokens_DD is a cAPITokens_DataDictionary
+    End_Object
+
+    Set Main_DD to oAPITokens_DD
+
+    Function TokenIsValid String sAPI Returns Boolean
+        DateTime dtNow dtExpire
+        Boolean bValid
+
+        Move (CurrentDateTime())    to dtNow
+        Move False  to bValid
+
+        Send Clear  of oAPITokens_DD
+        Move sAPI to APITokens.API
+        Send Find   of oAPITokens_DD EQ Index.1
+        If Found Begin
+            Get ExpirationDateTime  of oAPITokens_DD    to dtExpire
+            If (dtNow < dtExpire) Begin
+                Move True   to bValid
+            End
+        End
+
+        Function_Return bValid
+    End_Function
+
+    Function CurrentToken String sAPI Returns String
+        String  sToken
+
+        Send Clear  of oAPITokens_DD
+        Move sAPI to APITokens.API
+        Send Find   of oAPITokens_DD EQ Index.1
+        If Found Begin
+            Get Field_Current_Value of oAPITokens_DD    Field APITokens.Token   to sToken
+        End
+
+        Function_Return (Trim(sToken))
+    End_Function
+
+    Procedure UpdateToken String sAPI String sToken DateTime dtExpire
+        Send Clear  of oAPITokens_DD
+        Move sAPI   to APITokens.API
+        Send Find   of oAPITokens_DD EQ Index.1
+        If Found Begin
+            //Update the API key
+            Set Field_Changed_Value of oAPITokens_DD    Field APITokens.Token   to sToken
+            Send ExpirationDateTime of oAPITokens_DD dtExpire
+        End
+        Else Begin
+            //Create the API token record
+            Set Field_Changed_Value of oAPITokens_DD    Field APITokens.API             to sAPI
+            Set Field_Changed_Value of oAPITokens_DD    Field APITokens.Token           to sToken
+            Send ExpirationDateTime of oAPITokens_DD dtExpire
+
+            Send Request_Save       of oAPITokens_DD
+        End
+    End_Procedure
+
+End_Object

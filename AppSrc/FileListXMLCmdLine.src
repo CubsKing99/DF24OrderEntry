@@ -1,7 +1,7 @@
 ﻿Use Windows.pkg
 Use cHtmlHelp.pkg
 Use cApplication.pkg
-Use vWin32fh_sfa.pkg
+Use vWin32fh\vwin32fh.pkg
 Use Flexml.pkg
 Use msxml6.pkg
 Use msado28.pkg
@@ -15,7 +15,7 @@ Object oApplication is a cApplication
 
     Set psCompany to "Springfield, Inc."
     Set psProduct to "File List Command Line Utility"
-    Set psVersion to "2022"
+    Set psVersion to "2022-2024"
 
     Property Boolean pbXmlToConfig True
 

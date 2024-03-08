@@ -174,6 +174,17 @@ Object oMain is a Panel
                         Send Activate_oVendorView of hoClient
                     End_Procedure
                 End_Object
+
+                Object oValidateAddresswithFedExMenuItem is a cCJMenuItem
+                    Set psCaption to "Validate Address with FedEx"
+                    Set psTooltip to "Validate Address with FedEx"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oFedExValidateAddress of hoClient
+                    End_Procedure
+                End_Object
                 
             End_Object
             
@@ -456,21 +467,21 @@ Object oMain is a Panel
         Use SalesPerson.vw
         Use Vendor.vw
         
-        Use Basic\CustomerListBR.rv
-        Use WinPrint\CustomerListWP.rv
-        Use WinPrint\ItemsPerOrderWP.rv
-        Use WinPrint\OrdersWP.rv
-        Use WinPrint\OrdersByCustomerWP.rv
+//        Use Basic\CustomerListBR.rv
+//        Use WinPrint\CustomerListWP.rv
+//        Use WinPrint\ItemsPerOrderWP.rv
+//        Use WinPrint\OrdersWP.rv
+//        Use WinPrint\OrdersByCustomerWP.rv
         
         On_Key Key_Ctrl+Key_1 Send Activate_oCustomerView
         On_Key Key_Ctrl+Key_2 Send Activate_oInventoryView
         On_Key Key_Ctrl+Key_3 Send Activate_oOrderEntryView
         On_Key Key_Ctrl+Key_4 Send Activate_oSalesPersonView
         On_Key Key_Ctrl+Key_5 Send Activate_oVendorView
-        On_Key Key_Ctrl+Key_6 Send Activate_oCustomerListWP
-        On_Key Key_Ctrl+Key_7 Send Activate_oItemsPerOrderWP
-        On_Key Key_Ctrl+Key_8 Send Activate_oOrdersByCustomerWP
-        On_Key Key_Ctrl+Key_9 Send Activate_oOrdersWP
+//        On_Key Key_Ctrl+Key_6 Send Activate_oCustomerListWP
+//        On_Key Key_Ctrl+Key_7 Send Activate_oItemsPerOrderWP
+//        On_Key Key_Ctrl+Key_8 Send Activate_oOrdersByCustomerWP
+//        On_Key Key_Ctrl+Key_9 Send Activate_oOrdersWP
         
         Use StdAbout.pkg
         Use DemoSuggestionForm.vw
@@ -478,8 +489,8 @@ Object oMain is a Panel
         Use DemoCalendarControl.vw
         Use DemoDialogs.vw
         Use DemoParentCombos.vw
-        
-//        // DataFlex Reports report views
+
+//        // DataFlex Reports report view
 //        Use DataFlexReports\SalesPerStatePerYear.rv
 //        Use DataFlexReports\CustomerLabels.rv
 //        Use DataFlexReports\CustomerList.rv
@@ -493,10 +504,10 @@ Object oMain is a Panel
 //        Use DataFlexReports\OrderswithPagelayersReport.rv
 //        Use DataFlexReports\SalesPerSalesPersonPerUSAState.rv
         Use DemoWindowsTags.vw
-        
-        
-        
-        
+        Use JSONHelper\cWSJson.pkg
+        Use JSONHelper\WebServiceHelper.vw
+        Use JSONHelper\FedExValidateAddress.vw
+
         Procedure Activate_About
             Send DoAbout "Order Entry Sample Application" "24.0.24.43" "Copyright 2005-2024 Data Access Corporation. All rights reserved." "Data Access Worldwide" ""
         End_Procedure

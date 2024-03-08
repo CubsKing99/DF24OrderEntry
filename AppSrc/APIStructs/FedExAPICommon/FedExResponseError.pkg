@@ -1,0 +1,12 @@
+Use cJsonObject.pkg
+
+Struct stFedExResponseErrorParameterList
+    String  value
+    String  key
+End_Struct
+
+Struct stFedExResponseError
+    String  code
+    stFedExResponseErrorParameterList parameterList
+    String  message
+End_Struct

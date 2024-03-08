@@ -1,0 +1,148 @@
+﻿Use Windows.pkg
+Use cJsonObject.pkg
+Use JSONHelper\cJsonHttpBinaryTransfer.pkg
+Use JSONHelper\cWSJson.pkg
+Use APIStructs\FedExAPICommon\FedExResponseError.pkg
+
+Struct stFedExAPIKeyResponse
+    String  access_token
+    String  token_type
+    Integer expires_in
+    String  scope
+    String  transactionId
+    stFedExResponseError[] errors
+    //This isn't actually in the FedEx response, but I need it for knowing when the token expires...
+    DateTime dtGeneration
+End_Struct
+
+Class cFedExAPIKey is a cWSJsonPostString
+
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set psLogFileName to "FedExAPIKey"
+//            Set psRemoteHost to "apis.fedex.com"
+        Set psRemoteHost to "apis-sandbox.fedex.com"
+        Set piRemotePort to rpHttpSSL
+        Set pbSecure to True
+
+        Property String psClientID ""
+        Property String psClientPass ""
+        {DesignTime = False}
+        Property stFedExAPIKeyResponse ptAPIKeyResponse
+    End_Procedure
+
+    //The request looks something like this:
+    //  https://apis-sandbox.fedex.com/oauth/token?grant_type=client_credentials&client_id=Your_client_ID_GUID&client_secret=Your_secret_GUID
+
+    Function FedExAPIKeyAuthorize String sClientID String sClientPass Returns stFedExAPIKeyResponse
+        Boolean bOK
+        stFedExAPIKeyResponse tResponse
+
+        //Save this for later use in the Setup and Parse functions.
+        Set psClientID      to sClientID
+        Set psClientPass    to sClientPass
+
+        //Clear the response, but save the time we started the process
+        Set ptAPIKeyResponse        to tResponse
+
+        Get PostStringReturnJSON    to bOK
+        If bOK Begin
+            Get ptAPIKeyResponse    to tResponse
+        End
+
+        Function_Return tResponse
+    End_Function
+
+    Procedure SetupAdditionalHeaderFields
+        Integer iDontKnow
+
+        Forward Send SetupAdditionalHeaderFields
+
+        Get AddHeader   of oHttpReader "Content-Type" "application/x-www-form-urlencoded" to iDontKnow
+    End_Procedure
+
+    Function SetupPathAndParameters Returns String
+        String sURL sParameters
+
+        Move "/oauth/token"    to sURL
+
+//        //Setup the additional API parameters
+//        Move "?grant_type=client_credentials"   to sParameters
+//        Append sParameters "&client_id=" (psClientID(Self))
+//        Append sParameters "&client_secret=" (psClientPass(Self))
+//
+//        Append sURL sParameters
+
+        Function_Return sURL
+    End_Function
+
+    Function SetupPostString Returns String
+        String  sBody
+
+        //Create the text string to be sent
+        Move "grant_type=client_credentials"   to sBody
+        Append sBody "&client_id=" (psClientID(Self))
+        Append sBody "&client_secret=" (psClientPass(Self))
+
+        Function_Return sBody
+    End_Function
+
+    Function WaitForPostStringJSONResponse Returns Boolean
+        stFedExAPIKeyResponse tResponse
+        Boolean bOK
+        Integer iSecondsWaited
+
+        //Wait for the authorization.
+        //  We'll wait for a max of 30 seconds.
+        Get ptAPIKeyResponse    to tResponse
+
+        Move 0 to iSecondsWaited
+        While ((iSecondsWaited < 30) and (tResponse.access_token = "") and (SizeOfArray(tResponse.errors) = 0))
+            Sleep 1
+            Move (iSecondsWaited + 1) to iSecondsWaited
+            Get ptAPIKeyResponse    to tResponse
+        Loop
+
+//        Set ptAPIKeyResponse    to tResponse
+
+        Move ((tResponse.access_token <> "") or (SizeOfArray(tResponse.errors) > 0)) to bOk
+
+        Function_Return bOK
+    End_Function
+
+    Function ParseJSONResponse Handle hJSONResponse Returns Boolean
+        Boolean bOK
+        String  sErr sJSON
+        stFedExAPIKeyResponse tResponse
+
+        //Log the response
+        Send LogJSONObject hJSONResponse "Response"
+
+        //Store the response as a string.
+        Set pbRequireAllMembers of hJSONResponse    to False
+        Get Stringify       of hJSONResponse    to sJson
+        Set psResponseJSON  to sJson
+
+        If (pbRemoveNullMembers(Self)) Begin
+            Send RemoveNullMembers hJSONResponse
+        End
+
+        Get JsonToDataType      of hJSONResponse    to tResponse
+        Get psParseError        of hJSONResponse    to sErr
+
+//ToDo MRM I don't think psParseError is ever going to be set here from JsonToDataType...
+        If (Trim(sErr) > '') Begin
+            Move False  to bOK
+            Send LogError "" "" sErr
+            Set psLastError to sErr
+        End
+        Else Begin
+            Move True   to bOK
+
+            Set ptAPIKeyResponse    to tResponse
+        End
+        
+        Function_Return bOK
+    End_Function
+
+End_Class
