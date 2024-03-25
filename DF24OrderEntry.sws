@@ -4,7 +4,7 @@ Version=24.0
 ConfigFile=.\Programs\Config.ws
 [Conditionals]
 Is$WebApp=False
-Is$Win64=False
+Is$Win64=True
 [Preferences]
 DefaultFormHeight=12
 
@@ -14,3 +14,4 @@ DefaultFormHeight=12
 Project0=Order.src
 Project1=TabbedOrder.src
 Project2=FileListXMLCmdLine.src
+Project3=MarkDemo.src

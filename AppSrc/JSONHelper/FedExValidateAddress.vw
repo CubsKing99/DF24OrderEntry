@@ -16,8 +16,7 @@ Object oFedExValidateAddress is a dbView
     Set Border_Style to Border_Thick
     Set Size to 92 208
     Set Location to 2 2
-    Set Label to "Validate Address with FedEx"
-    Set pbAutoActivate to True
+    Set Label to "Validate Address with FedEx REST API"
     Set piMaxSize to 92 208
 
     Object frmName is a Form
