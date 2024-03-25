@@ -504,7 +504,8 @@ Object oMain is a Panel
 //        Use DataFlexReports\OrderswithPagelayersReport.rv
 //        Use DataFlexReports\SalesPerSalesPersonPerUSAState.rv
         Use DemoWindowsTags.vw
-        Use JSONHelper\cWSJson.pkgUse JSONHelper\WebServiceHelper.vw
+        Use JSONHelper\cWSJson.pkg
+        Use JSONHelper\WebServiceHelper.vw
         Use JSONHelper\FedExValidateAddress.vw
 
         Procedure Activate_About
