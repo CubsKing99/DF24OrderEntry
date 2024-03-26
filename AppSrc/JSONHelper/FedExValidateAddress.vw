@@ -78,7 +78,7 @@ Object oFedExValidateAddress is a dbView
             Get Value   of frmName      to tAddress.addressesToValidate[0].contact.companyName
 
             Get Value   of frmStreet1   to tAddress.addressesToValidate[0].tAddress.streetLines[0]
-            Get Value   of frmStreet2   to tAddress.addressesToValidate[0].tAddress.streetLines[0]
+            Get Value   of frmStreet2   to tAddress.addressesToValidate[0].tAddress.streetLines[1]
             Get Value   of frmCity      to tAddress.addressesToValidate[0].tAddress.city
             Get Value   of frmState     to tAddress.addressesToValidate[0].tAddress.stateOrProvinceCode
             Get Value   of frmZIP       to tAddress.addressesToValidate[0].tAddress.postalCode

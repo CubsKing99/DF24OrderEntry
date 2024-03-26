@@ -4,7 +4,7 @@ Version=24.0
 ConfigFile=.\Programs\Config.ws
 [Conditionals]
 Is$WebApp=False
-Is$Win64=True
+Is$Win64=False
 [Preferences]
 DefaultFormHeight=12
 
