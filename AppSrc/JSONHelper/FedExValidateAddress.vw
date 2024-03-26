@@ -98,7 +98,7 @@ Object oFedExValidateAddress is a dbView
                     Case Break
                 Case (SizeOfArray(tResponse.Output.resolvedAddresses) > 0)
                     If (SizeOfArray(tResponse.Output.resolvedAddresses[0].streetLinesToken) > 0) Begin
-                        Send Info_Box (SFormat("The resolved address is%1%1%2%1%3, %4 %5", C_CRLF, tResponse.Output.resolvedAddresses[0].streetLinesToken[0], tResponse.Output.resolvedAddresses[0].cityToken, tResponse.Output.resolvedAddresses[0].stateOrProvinceCode, tResponse.Output.resolvedAddresses[0].parsedPostalCode.base)) "Address Parsed"
+                        Send Info_Box (SFormat("The resolved address is%1%1%2%1%3, %4 %5", C_CRLF, tResponse.Output.resolvedAddresses[0].streetLinesToken[0], tResponse.Output.resolvedAddresses[0].city, tResponse.Output.resolvedAddresses[0].stateOrProvinceCode, tResponse.Output.resolvedAddresses[0].parsedPostalCode.base)) "Address Parsed"
                     End
                     Else Begin
                         Send UserError "FedEx says they validated the address, but they didn't give us back a parsed address..." "What's Going On?"
