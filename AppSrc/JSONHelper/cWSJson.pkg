@@ -44,66 +44,8 @@ Class cWSJsonHttpBinaryTransfer is a cJsonHttpBinaryTransfer
         If bValid Begin
             //If we've reached the end, call the "Process the data" method
             Send HttpReaderDataReceived sContentType ucData
-            //Clear the buffer for the next transfer
-//            Set pucReceivedData  to ""
         End
-//        Else Begin
-//            //Save the data for the next chunk 
-//            Set psReceivedData  to sReceivedData
-//        End
-
-//
-//
-//        Move (SizeOfArray(ucData)) to iDataLen
-//        
-//        If (iDataLen > 0) Begin
-//            Get pucDataReceived to ucBuffer
-//            If (SizeOfArray(ucBuffer) > 0) Begin
-//                Set pucDataReceived to (AppendArray(ucBuffer, ucData))
-//            End
-//            Else Begin
-//                Set psContentTypeReceived to sContentType
-//                
-//                If (iDataLen > 3 and ucData[0]=C_BOM1 and ucData[1]=C_BOM2 and ucData[2]=C_BOM3) Begin
-//                    Set pucDataReceived to (CopyArray(ucData, 3, iDataLen - 1))
-//                End
-//                Else Begin
-//                    Set pucDataReceived to ucData
-//                End
-//            End
-//        End
     End_Procedure
-
-//    Procedure OnDataReceived String sContentType String sData
-//        String  sReceivedData
-//        Integer iBufferSize
-//        Handle  hJSON
-//        Boolean bValid
-//
-//        Forward Send OnDataReceived sContentType sData
-//
-//        Get piBufferSize    to iBufferSize
-//
-//        Get psReceivedData  to sReceivedData
-//        Append sReceivedData sData
-//
-//        //Check if the data is a valid JSON struct
-//        Get Create (RefClass(cJsonObject)) to hJSON
-//        Send InitializeJsonType of hJSON jsonTypeObject
-//
-//        Get ParseString of hJSON sReceivedData  to bValid
-//
-//        If bValid Begin
-//            //If we've reached the end, call the "Process the data" method
-//            Send HttpReaderDataReceived sContentType sReceivedData
-//            //Clear the buffer for the next transfer
-//            Set psReceivedData  to ""
-//        End
-//        Else Begin
-//            //Save the data for the next chunk 
-//            Set psReceivedData  to sReceivedData
-//        End
-//    End_Procedure
 
     { MethodType = Event }
     Procedure HttpReaderDataReceived String sContentType UChar[] ucData
@@ -324,15 +266,6 @@ Class cWSJson is a cObject
         Get StringifyUTF8 of hRequest   to ucRequest
 
         Get HttpVerbJsonUCharBinary of oHttpReader sRemoteHost sPath ucRequest sVerb    to ucResponse
-//        If (sVerb = "POST") Begin
-//            Get HttpPostJson    of oHttpReader sRemoteHost sPath hRequest (&bOk) to hResponse
-//        End
-//        Else If (sVerb = "PUT") Begin
-//            Get HttpPutJson     of oHttpReader sRemoteHost sPath hRequest (&bOk) to hResponse
-//        End
-//        Else If (sVerb = "DELETE") Begin
-//            Get HttpDeleteJson  of oHttpReader sRemoteHost sPath hRequest (&bOk) to hResponse
-//        End
 
         Get ResponseStatusCode of oHttpReader to iResponseCode
         If ((iResponseCode >= 200) and (iResponseCode < 300)) Begin     // 200 codes.

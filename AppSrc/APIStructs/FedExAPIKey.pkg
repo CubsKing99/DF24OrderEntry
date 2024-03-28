@@ -66,13 +66,6 @@ Class cFedExAPIKey is a cWSJsonPostString
 
         Move "/oauth/token"    to sURL
 
-//        //Setup the additional API parameters
-//        Move "?grant_type=client_credentials"   to sParameters
-//        Append sParameters "&client_id=" (psClientID(Self))
-//        Append sParameters "&client_secret=" (psClientPass(Self))
-//
-//        Append sURL sParameters
-
         Function_Return sURL
     End_Function
 

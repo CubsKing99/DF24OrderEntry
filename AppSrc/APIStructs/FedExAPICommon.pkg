@@ -38,10 +38,7 @@ Class cFedExAPI is a cWSJson
 
         Forward Send SetupAdditionalHeaderFields
 
-        //Get the current token from SysParm, if there's one that's valid
-        //2024-02-06 MRM We do NOT need different API keys per account.  They're all under 1 project on
-        //  FedEx's website, so they can all use the same API key.
-//        Get FedExAPIToken   of bpFedExAPIKey (psClientID(Self)) (psClientPass(Self)) (psAccountNum(Self))   to sToken
+        //Get the current token if there's one that's valid
         Get FedExAPIToken   of bpFedExAPIKey (psClientID(Self)) (psClientPass(Self))    to sToken
         If (sToken = "") Begin
             Set pbHeaderSetup   to False

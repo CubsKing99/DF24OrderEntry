@@ -34,9 +34,6 @@ Class cFedExAddressValidationAPI is a cFedExAPI
 #ENDIF        
 
         Get PostJSON    to bOK
-//        If bOK Begin
-//            Get ptFedExCreateShipmentResponse   to tResponse //Pull the changes for Lat/Long and County to pass back.
-//        End
         
 #IFDEF Is$WebApp
 #ELSE
@@ -65,7 +62,6 @@ Class cFedExAddressValidationAPI is a cFedExAPI
 
 //        If (pbRemoveNullMembers(Self)) Begin
 //            Set pbRequireAllMembers of hJSON    to False
-//            Send RemoveBlankFedExMembers hJSON tRequest
 //            Send RemoveEmptyMembers hJSON True True True
 //        End
 //
@@ -80,42 +76,6 @@ Class cFedExAddressValidationAPI is a cFedExAPI
 
         Function_Return hJSON
     End_Function
-
-//    //Remove specific nodes that we don't want to send if they're empty.  Otherwise FedEx gets confused...
-//    Procedure RemoveBlankFedExMembers Handle hRequest stFedExCreateShipment tCreateShipmentRequest
-//        Handle  hRequestedShipment hLine
-//        String  sNodeName
-//
-//        Get Member  of hRequest "requestedShipment" to hRequestedShipment
-//
-//        //Remove requestedShipment nodes we don't fill out
-//        Send RemoveMember   of hRequestedShipment "totalDeclaredValue"
-//        Send RemoveMember   of hRequestedShipment "soldTo"
-//        Send RemoveMember   of hRequestedShipment "totalWeight"
-//        Send RemoveMember   of hRequestedShipment "origin"
-//        Send RemoveMember   of hRequestedShipment "emailNotificationDetail"
-//        Send RemoveMember   of hRequestedShipment "variableHandlingChargeDetail"
-//        Send RemoveMember   of hRequestedShipment "shippingDocumentSpecification"
-//
-//        //Check to see if we filled out anything in specific elements that are
-//        // only conditionally filled and remove them if blank.
-//        If (SizeOfArray(tCreateShipmentRequest.requestedShipment.shipmentSpecialServices.specialServiceTypes) = 0) Begin
-//            Send RemoveMember   of hRequestedShipment "shipmentSpecialServices"
-//        End
-//
-//        If (tCreateShipmentRequest.requestedShipment.customsClearanceDetail.commercialInvoice.termsOfSale = "") Begin
-//            Send RemoveMember   of hRequestedShipment "customsClearanceDetail"
-//        End
-//
-//        If (tCreateShipmentRequest.requestedShipment.smartPostInfoDetail.hubId = "") Begin
-//            Send RemoveMember   of hRequestedShipment "smartPostInfoDetail"
-//        End
-//
-//        //We have to remove the declaredValue node from all the requestedPackageLineItems because we don't use it and it's causing FedEx to throw parse errors.
-//        //  Rather than create the node, then loop through to find it and remove it, I'm going to take it out of the struct.
-//
-//        Send Destroy of hRequestedShipment
-//    End_Procedure
 
     Function ParseJSONResponse Handle hJSONResponse Returns Boolean
         Boolean bOK

@@ -103,34 +103,7 @@ Object oWebServiceHelper is a dbView
         End_Object
     
     End_Object
-    
-//    Function ParamDataTypeName Integer eType Returns String
-//        String sType
-//        Case Begin
-//            Case (eType=xsString  ) Move "string"    to sType
-//            Case (eType=xsNumber  ) Move "number"    to sType
-//            Case (eType=xsDate    ) Move "date"      to sType
-//            Case (eType=xsInteger ) Move "integer"   to sType
-//            Case (eType=xsReal    ) Move "real"      to sType
-//            Case (eType=xsBigint  ) Move "bigint "   to sType
-//            Case (eType=xsTime    ) Move "time"      to sType
-//            Case (eType=xsDatetime) Move "dateTime"  to sType
-//            Case (eType=xsFloat   ) Move "float"     to sType
-//            Case (eType=xsChar    ) Move "char"      to sType
-//            Case (eType=xsUchar   ) Move "uchar"     to sType
-//            Case (eType=xsShort   ) Move "short"     to sType
-//            Case (eType=xsUShort  ) Move "ushort"    to sType
-//            Case (eType=xsUinteger) Move "uinteger"  to sType
-//            Case (eType=xsBoolean ) Move "boolean"   to sType
-//            Case (eType=xsUbigint ) Move "ubigint"   to sType
-//            Case (eType=xsCurrency) Move "currency"  to sType
-//            Case (eType=xsDecimal ) Move "decimal"   to sType
-//            Case Else               Move "xmlHandle"   to sType
-//        Case End
-//        
-//        Function_Return sType
-//    End_Function
-    
+
     Function PrettyFormatXMLToAddress Handle hoXml Returns Address
         Handle hoXsl
         String sPath
@@ -266,10 +239,6 @@ Object oWebServiceHelper is a dbView
 
         Set Value   of txtResponse  to sResponse
         Set psResponse  to sResponse
-
-//        If (pbSaveWebServiceFiles(oProperties(Self))) Begin
-//            Send SaveRequestResponse "SOAP"
-//        End
 
         Send beginning_of_data   of txtRequest
         Send beginning_of_data   of txtResponse
