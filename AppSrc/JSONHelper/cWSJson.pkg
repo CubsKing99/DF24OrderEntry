@@ -341,8 +341,13 @@ Class cWSJson is a cObject
             End
         End
 
+        //Clean up created objects
+        If (hRequest > 0) Begin
+            Send Destroy    of hRequest
+        End
+
         If (hResponse > 0) Begin
-            Send Destroy of hResponse
+            Send Destroy    of hResponse
         End
 
         Function_Return bOk
@@ -702,10 +707,13 @@ Class cWSJsonPostString is a cWSJson
 
         Get Create (RefClass(cJsonObject)) to hJSON
         Send InitializeJsonType of hJSON jsonTypeObject
+
         Get ParseUtf8   of hJSON ucData to bParsed
         If bParsed Begin
             Get ParseJSONResponse hJSON to bParsed
         End
+
+        Send Destroy    of hJSON
     End_Procedure
 
 End_Class
