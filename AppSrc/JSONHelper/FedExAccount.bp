@@ -16,7 +16,6 @@ Object bpFedExAccountInfo is a BusinessProcess
         Boolean bExists
         FedExAccountInfo tAcctInfo
 
-        Get Create (RefClass(cIniFile)) to hINI
         Move ((GetApplicationPath(oApplication(Self))) - "\FedEx.ini") to sFileName
 
         File_Exist sFileName bExists
@@ -25,7 +24,9 @@ Object bpFedExAccountInfo is a BusinessProcess
             Function_Return
         End
 
+        Get Create (RefClass(cIniFile)) to hINI
         Set psFileName  of hIni to sFileName
+
         Move (ReadString(hIni, "Connection", "ClientID", ""))   to tAcctInfo.sClientID
         Move (ReadString(hIni, "Connection", "ClientPass", "")) to tAcctInfo.sClientPass
         Move (ReadString(hIni, "Connection", "AccountNum", "")) to tAcctInfo.sAccountNum
