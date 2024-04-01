@@ -41,6 +41,8 @@ Class cWSJsonHttpBinaryTransfer is a cJsonHttpBinaryTransfer
         Get pucDataReceived to ucBuffer
         Get ParseUtf8   of hJSON ucBuffer  to bValid
 
+        Send Destroy of hJSON //Thanks, Frank!
+
         If bValid Begin
             //If we've reached the end, call the "Process the data" method
             Send HttpReaderDataReceived sContentType ucData
