@@ -30,6 +30,8 @@ Object bpFedExAccountInfo is a BusinessProcess
         Move (ReadString(hIni, "Connection", "ClientPass", "")) to tAcctInfo.sClientPass
         Move (ReadString(hIni, "Connection", "AccountNum", "")) to tAcctInfo.sAccountNum
 
+        Send Destroy    of hINI //Thanks, Frank!
+
         Function_Return tAcctInfo        
     End_Function
 End_Object
